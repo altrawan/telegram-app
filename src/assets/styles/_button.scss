@@ -1,0 +1,14 @@
+// Auth Layout Start
+.layout__auth {
+  background-color: #EAEAEA;
+  height: 100vh;
+  width: 100;
+  display: flex;
+  justify-content: center;
+
+  .children {
+    display: flex;
+    height: max-content;
+  }
+}
+// Auth Layout End
