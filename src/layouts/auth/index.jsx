@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../assets/styles/_layout.scss';
+import './index.scss';
 
 const AuthLayout = ({ children }) => {
   return (
