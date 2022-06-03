@@ -1,0 +1,14 @@
+.style__button {
+  border: 0;
+  border-radius: 70px;
+  height: 60px;
+  background-color: var(--text-purple);
+  color: var(--text-white);
+  font-family: "Rubik", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}

@@ -2,15 +2,15 @@ import React, { useEffect } from 'react';
 import { Row, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { AuthLayout } from '../../../layouts';
-import { Card, Input, Button } from '../../../components';
+import { Card, Input, Button, Separator } from '../../../components';
 import './index.scss';
 
 const index = () => {
-  const [isShowPassword, setIsShowPassword] = React.useState('password');
-  const [form, setForm] = {
-    email: '',
-    password: ''
-  };
+  // const [isShowPassword, setIsShowPassword] = React.useState('password');
+  // const [form, setForm] = {
+  //   email: '',
+  //   password: ''
+  // };
 
   useEffect(() => {
     document.title = 'Telegram App | Login Page';
@@ -33,7 +33,7 @@ const index = () => {
                 id="email"
                 name="email"
                 placeholder="Enter email"
-                value={form.email}
+                // value={form.email}
                 onChange={handleChange}
               />
             </Row>
@@ -43,7 +43,7 @@ const index = () => {
                 id="password"
                 name="password"
                 placeholder="Enter password"
-                value={form.password}
+                // value={form.password}
                 onChange={handleChange}
               />
             </Row>

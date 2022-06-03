@@ -16,7 +16,7 @@ Separator.propTypes = {
 };
 
 Separator.defaultProps = {
-  title: 'Title divider'
+  title: 'Title'
 };
 
 export default Separator;

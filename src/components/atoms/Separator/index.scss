@@ -3,4 +3,20 @@
   justify-content: space-between;
   align-items: center;
   color: var(--text-gray);
+
+  .line {
+    width: 100px;
+    height: 1px;
+    background-color: var(--text-gray);
+
+    @media screen and (max-width: 576px) {
+      display: none;
+    }
+  }
+
+  &--title {
+    @media screen and (max-width: 576px) {
+      width: 100%;
+    }
+  }
 }
