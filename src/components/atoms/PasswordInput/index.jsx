@@ -10,6 +10,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import './index.scss';
 
 const PasswordInput = ({
+  style,
   isShowPassword,
   value,
   handleChange,
@@ -34,6 +35,7 @@ const PasswordInput = ({
         type={isShowPassword ? 'text' : 'password'}
         value={value}
         onChange={handleChange}
+        style={style}
         inputProps={{
           style: {
             fontFamily: 'Rubik',
@@ -63,7 +65,8 @@ Input.propTypes = {
   value: propTypes.string,
   handleChange: propTypes.func,
   handleClickShowPassword: propTypes.func,
-  handleMouseDownPassword: propTypes.func
+  handleMouseDownPassword: propTypes.func,
+  style: propTypes.object
 };
 
 export default PasswordInput;

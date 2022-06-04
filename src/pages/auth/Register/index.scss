@@ -1,0 +1,50 @@
+.style__login {
+  padding: 42px 70px;
+  width: 400px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+
+  @media screen and(max-width: 576px) {
+    width: 100%;
+  }
+
+  &--header {
+    display: flex;
+    align-items: center;
+    svg {
+      margin-left: -10px;
+      width: 32px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    h3 {
+      width: 100%;
+    }
+  }
+
+  &--title {
+    font-family: "Rubik", sans-serif;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 26px;
+    text-align: center;
+    letter-spacing: -0.165px;
+    color: var(--text-purple);
+  }
+
+  &--subtitle {
+    font-family: "Rubik", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: var(--text-black);
+  }
+
+  &--textfield {
+    margin-bottom: 100px;
+    width: 100%;
+  }
+}

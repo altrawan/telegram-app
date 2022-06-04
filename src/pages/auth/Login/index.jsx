@@ -38,7 +38,7 @@ const index = () => {
                 type="email"
                 id="email"
                 name="email"
-                label="email"
+                label="Email"
                 style={{ marginBottom: '30px' }}
                 className="style__login--textfield"
               />
@@ -51,7 +51,7 @@ const index = () => {
               />
             </Row>
             <Row>
-              <Link to="/auth/forgot-password" className="style__login--forgot">
+              <Link to="/forgot-password" className="style__login--forgot">
                 Forgot Password?
               </Link>
             </Row>
@@ -68,7 +68,7 @@ const index = () => {
           <footer className="style__login--footer">
             <p className="style__login--text">
               Don&apos;t have and account?{' '}
-              <Link to="/auth/register" className="style__login--anchor">
+              <Link to="/register" className="style__login--anchor">
                 <span className="style__login--link">Sign Up</span>
               </Link>
             </p>
