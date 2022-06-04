@@ -9,7 +9,7 @@ import Login from '../pages/auth/Login';
 import Register from '../pages/auth/Register';
 
 // Main
-import Home from '../layouts/main';
+import Home from '../pages/Home';
 import Profile from '../pages/Profile';
 import NotFound from '../pages/404';
 

@@ -1,0 +1,43 @@
+.style__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--text-white);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+
+  &--form {
+    margin: 24px 40px;
+    padding: 21px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fafafa;
+    border-radius: 15px;
+
+    input {
+      border: 0;
+      outline: none;
+      box-shadow: none;
+      width: 100%;
+      background-color: transparent;
+      font-family: 'Rubik', sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 19px;
+      letter-spacing: -0.165px;
+      color: var(--text-gray);
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  &--action {
+    display: flex;
+    gap: 22px;
+  }
+}

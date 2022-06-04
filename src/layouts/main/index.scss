@@ -7,12 +7,17 @@
 
   aside {
     background-color: var(--text-white);
-    overflow-y: scroll;
+    overflow-y: auto;
     /* Firefox */
     scrollbar-width: none;
     /* Internet Explorer 10+ */
     -ms-overflow-style: none;
     width: 28%;
+
+    /* Not Showing Scrollbar in Google Chrome */
+    &::-webkit-scrollbar {
+      -webkit-appearance: none;
+    }
   }
 
   &--content {
@@ -21,7 +26,7 @@
     align-items: center;
     width: 72%;
     height: 100vh;
-    background-color: #FAFAFA;
+    background-color: #fafafa;
   }
 
   &--notfound {
@@ -30,5 +35,130 @@
     font-size: 24px;
     line-height: 28px;
     color: var(--text-gray);
+  }
+
+  &--main {
+    display: flex;
+    flex-shrink: 1;
+    width: 72%;
+    height: 100vh;
+    position: relative;
+    background-color: #fafafa;
+  }
+
+  &--room {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    position: relative;
+  }
+
+  &--chat {
+    margin-top: 30px;
+    padding: 0 50px;
+    padding-bottom: 150px;
+    padding-top: 130px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* Internet Explorer 10+ */
+    height: 100%;
+
+    &::-webkit-scrollbar {
+      /* WebKit */
+      width: 0;
+      height: 0;
+    }
+  }
+}
+
+.display {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 1rem;
+
+  .chat {
+    display: flex;
+    margin-bottom: 25px;
+
+    .box {
+      display: flex;
+      gap: 15px;
+
+      .avatar {
+        margin-top: auto;
+        width: 64px;
+        height: 64px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 20px;
+        }
+      }
+
+      .wrapper {
+        display: flex;
+        gap: 10px;
+
+        .message {
+          font-family: 'Rubik', sans-serif;
+          font-weight: 400;
+          font-size: 15px;
+          line-height: 185.7%;
+          letter-spacing: -0.165px;
+          max-width: 250px;
+          padding: 20px 33px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          @media screen and (max-width: 992px) {
+            max-width: 150px;
+          }
+        }
+
+        .time {
+          font-family: 'Rubik', sans-serif;
+          color: #bebebe;
+          font-size: 14px;
+          margin-top: 6px;
+        }
+      }
+    }
+
+    &.others {
+      display: flex;
+
+      .box {
+        flex-direction: row-reverse;
+        display: flex;
+        justify-content: start;
+      }
+
+      .message {
+        background: #7e98df;
+        border-radius: 35px 35px 35px 10px;
+        color: #ffffff;
+      }
+    }
+
+    &.me {
+      display: flex;
+      justify-content: flex-end;
+
+      .wrapper {
+        display: flex;
+        flex-direction: row-reverse;
+
+        .message {
+          background-color: var(--text-white);
+          border-radius: 35px 10px 35px 35px;
+        }
+      }
+    }
   }
 }

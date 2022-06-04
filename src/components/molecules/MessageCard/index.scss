@@ -1,0 +1,99 @@
+.style__message {
+  margin-bottom: 30px;
+  display: flex;
+
+  &--avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 20px;
+
+    @media screen and (max-width: 992px) {
+      display: none;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+    }
+  }
+
+  &--content {
+    display: flex;
+    flex: 1;
+
+    &:hover {
+      opacity: 0.6;
+      cursor: pointer;
+    }
+  }
+
+  &--text {
+    margin-left: 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  &--username {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 21px;
+    letter-spacing: -0.165px;
+    color: var(--text-black);
+  }
+
+  &--chat {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 17px;
+    letter-spacing: -0.165px;
+    color: var(--text-purple);
+  }
+
+  &--number {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 15px;
+
+    .times {
+      font-family: 'Rubik', sans-serif;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 17px;
+      text-align: center;
+      color: var(--text-gray);
+    }
+
+    .cirle-notification {
+      background-color: var(--text-purple);
+      width: 24px;
+      height: 24px;
+      border-radius: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      p {
+        font-family: 'Rubik', sans-serif;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 14px;
+        text-align: center;
+        letter-spacing: -0.165px;
+        color: var(--text-white);
+      }
+    }
+  }
+}

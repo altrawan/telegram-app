@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { APP_NAME } from '../../helpers/env';
 import './index.scss';
 
 const index = () => {
+  useEffect(() => {
+    document.title = `${APP_NAME} | Not Found Page`;
+  }, []);
+
   return (
     <div className="style__notfound">
       <div className="style__notfound--container">

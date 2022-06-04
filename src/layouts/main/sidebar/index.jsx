@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SearchInput } from '../../atoms';
+import { SearchInput, MessageCard } from '../../../components';
 import {
   IconSetting,
   IconUser,
@@ -87,6 +87,62 @@ const index = () => {
             />
           </svg>
         </div>
+      </div>
+      <div className="style__sidebar--message">
+        <MessageCard
+          username="Thresa Webb"
+          message="Why did you do that?"
+          time="15:20"
+          newMessage={2}
+        />
+        <MessageCard
+          username="Thresa Webb"
+          message="Why did you do that?"
+          time="15:20"
+          newMessage={2}
+        />
+        <MessageCard
+          username="Thresa Webb"
+          message="Why did you do that?"
+          time="15:20"
+          newMessage={2}
+        />
+        <MessageCard
+          username="Thresa Webb"
+          message="Why did you do that?"
+          time="15:20"
+          newMessage={2}
+        />
+        <MessageCard
+          username="Thresa Webb"
+          message="Why did you do that?"
+          time="15:20"
+          newMessage={2}
+        />
+        <MessageCard
+          username="Thresa Webb"
+          message="Why did you do that?"
+          time="15:20"
+          newMessage={2}
+        />
+        <MessageCard
+          username="Thresa Webb"
+          message="Why did you do that?"
+          time="15:20"
+          newMessage={2}
+        />
+        <MessageCard
+          username="Thresa Webb"
+          message="Why did you do that?"
+          time="15:20"
+          newMessage={2}
+        />
+        <MessageCard
+          username="Thresa Webb"
+          message="Why did you do that?"
+          time="15:20"
+          newMessage={2}
+        />
       </div>
     </div>
   );
