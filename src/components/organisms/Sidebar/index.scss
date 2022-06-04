@@ -1,0 +1,94 @@
+.style__sidebar {
+  position: sticky;
+  background-color: var(--text-white);
+  top: 0;
+  padding: 45px 30px;
+  padding-bottom: 0;
+
+  &--header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+    position: sticky;
+    top: 0;
+  }
+
+  &--logo {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
+    font-size: 29px;
+    line-height: 34px;
+    text-align: center;
+    letter-spacing: -0.165px;
+    color: var(--text-purple);
+  }
+
+  &--toggler {
+    &:hover {
+      opacity: 0.5;
+      cursor: pointer;
+    }
+  }
+
+  &--action {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .nav__popup {
+    position: absolute;
+    right: 0;
+    top: 50px;
+    width: 200px;
+    padding: 22px 30px;
+    background-color: var(--text-purple);
+    border-radius: 35px 10px 35px 35px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    z-index: 1;
+    transition: all 0.5s ease;
+
+    @media screen and (max-width: 992px) {
+      width: 200px;
+    }
+
+    @media screen and (max-width: 576px) {
+      border-radius: 10px 35px 35px 35px;
+      right: -100px;
+      position: fixed;
+    }
+
+    &--row {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      
+
+      &:hover {
+        opacity: 0.5;
+        cursor: pointer;
+      }
+
+      img {
+        width: 13%;
+        @media screen and (max-width: 992px) {
+          display: none;
+        }
+      }
+
+      p {
+        font-family: 'Rubik', sans-serif;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        letter-spacing: -0.165px;
+        color: var(--text-white);
+        width: 100%;
+      }
+    }
+  }
+}
