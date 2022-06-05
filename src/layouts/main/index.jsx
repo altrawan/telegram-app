@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import jwtDecode from 'jwt-decode';
+import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUser } from '../../redux/actions/user';
 import Header from './header';
 import Content from './content';
-import Sidebar from './profile-sidebar';
+import Sidebar from './sidebar';
 import Footer from './footer';
+import ProfileSidebar from './profile-sidebar';
 import './index.scss';
 
 const index = ({ children }) => {
+  const location = useLocation();
   const [isLoading, setIsLoading] = useState(false);
   const [socketio, setSocketio] = useState(null);
   const [listChat, setListChat] = useState([]);
@@ -86,17 +89,19 @@ const index = ({ children }) => {
     setMessage('');
   };
 
-  // console.log(listChat);
-
   return (
     <div className="style__home">
       <aside>
-        <Sidebar
-          isLoading={isLoading}
-          login={login}
-          listUsers={listUsers}
-          selectReceiver={selectReceiver}
-        />
+        {location.pathname === '/profile' ? (
+          <ProfileSidebar />
+        ) : (
+          <Sidebar
+            isLoading={isLoading}
+            login={login}
+            listUsers={listUsers}
+            selectReceiver={selectReceiver}
+          />
+        )}
       </aside>
 
       {!openMessage ? (
