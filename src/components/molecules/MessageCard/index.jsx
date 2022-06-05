@@ -1,14 +1,23 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import { AvatarDefault } from '../../../assets/images';
+import { API_URL } from '../../../helpers/env';
 import './index.scss';
 // import { API_URL } from '../../../helpers/env';
 
-const MessageCard = ({ username, message, time, newMessage, onClick }) => {
+const MessageCard = ({ avatar, username, message, time, newMessage, onClick }) => {
   return (
     <div className="style__message" onClick={onClick}>
       <div className="style__message--avatar">
-        <img src={AvatarDefault} alt={username} />
+        <img
+          src={`${
+            avatar ? `${API_URL}uploads/users/${avatar}` : `${API_URL}uploads/users/default.png`
+          }`}
+          alt={username}
+          onError={(e) => {
+            e.target.src = AvatarDefault;
+          }}
+        />
       </div>
       <div className="style__message--content">
         <div className="style__message--text">

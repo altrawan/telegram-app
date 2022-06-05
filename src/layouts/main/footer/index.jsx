@@ -2,11 +2,18 @@ import React from 'react';
 import { IconPlus, IconEmoticon, IconCamera } from '../../../assets/icons';
 import './index.scss';
 
-const index = () => {
+const index = ({ onSendMessage, message, setMessage }) => {
   return (
     <section className="style__footer">
-      <form className="style__footer--form">
-        <input type="text" name="message" autoComplete="off" placeholder="Type your message" />
+      <form className="style__footer--form" onSubmit={onSendMessage}>
+        <input
+          type="text"
+          name="message"
+          autoComplete="off"
+          placeholder="Type your message"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        />
         <div className="style__footer--action">
           <div className="icon">
             <img src={IconPlus} alt="icon" />

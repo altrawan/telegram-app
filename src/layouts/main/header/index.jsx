@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { AvatarDefault } from '../../../assets/images';
+import { API_URL } from '../../../helpers/env';
 import './index.scss';
 
-const index = () => {
+const index = ({ activeReceiver }) => {
   const [showContactInfo, setShowContactInfo] = useState(false);
   return (
     <section className="style__header">
@@ -12,10 +13,20 @@ const index = () => {
           return showContactInfo ? setShowContactInfo(false) : setShowContactInfo(true);
         }}>
         <div className="style__header--avatar">
-          <img src={AvatarDefault} alt="name" />
+          <img
+            src={`${
+              activeReceiver.user.avatar
+                ? `${API_URL}uploads/users/${activeReceiver.user.avatar}`
+                : `${API_URL}uploads/users/default.png`
+            }`}
+            alt={activeReceiver.user.name}
+            onError={(e) => {
+              e.target.src = AvatarDefault;
+            }}
+          />
         </div>
         <div className="style__header--desc">
-          <h3>Mother</h3>
+          <h3>{activeReceiver.user.name}</h3>
           <p className="online">Online</p>
         </div>
       </div>

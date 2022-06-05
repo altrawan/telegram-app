@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ContentLoader from 'react-content-loader';
 import { useNavigate } from 'react-router-dom';
 import { SearchInput, MessageCard } from '../../../components';
 import {
@@ -12,7 +13,7 @@ import {
 } from '../../../assets/icons';
 import './index.scss';
 
-const index = () => {
+const index = ({ isLoading, login, listUsers, selectReceiver }) => {
   const navigate = useNavigate();
   const [navbarPopup, setNavbarPopup] = useState(false);
 
@@ -20,6 +21,8 @@ const index = () => {
     localStorage.clear();
     return navigate('/login');
   };
+
+  // console.log(listUsers);
 
   return (
     <div className="style__sidebar">
@@ -95,60 +98,26 @@ const index = () => {
         </div>
       </div>
       <div className="style__sidebar--message">
-        <MessageCard
-          username="Thresa Webb"
-          message="Why did you do that?"
-          time="15:20"
-          newMessage={2}
-        />
-        <MessageCard
-          username="Thresa Webb"
-          message="Why did you do that?"
-          time="15:20"
-          newMessage={2}
-        />
-        <MessageCard
-          username="Thresa Webb"
-          message="Why did you do that?"
-          time="15:20"
-          newMessage={2}
-        />
-        <MessageCard
-          username="Thresa Webb"
-          message="Why did you do that?"
-          time="15:20"
-          newMessage={2}
-        />
-        <MessageCard
-          username="Thresa Webb"
-          message="Why did you do that?"
-          time="15:20"
-          newMessage={2}
-        />
-        <MessageCard
-          username="Thresa Webb"
-          message="Why did you do that?"
-          time="15:20"
-          newMessage={2}
-        />
-        <MessageCard
-          username="Thresa Webb"
-          message="Why did you do that?"
-          time="15:20"
-          newMessage={2}
-        />
-        <MessageCard
-          username="Thresa Webb"
-          message="Why did you do that?"
-          time="15:20"
-          newMessage={2}
-        />
-        <MessageCard
-          username="Thresa Webb"
-          message="Why did you do that?"
-          time="15:20"
-          newMessage={2}
-        />
+        {isLoading ? (
+          <ContentLoader />
+        ) : (
+          listUsers.map((item, index) =>
+            item.user.id !== login.id ? (
+              <div key={index}>
+                <MessageCard
+                  avatar={item.user.avatar}
+                  username={item.user.name}
+                  message={'No Chat'}
+                  time="00.00"
+                  newMessage={0}
+                  onClick={() => selectReceiver(item)}
+                />
+              </div>
+            ) : (
+              <></>
+            )
+          )
+        )}
       </div>
     </div>
   );
