@@ -35,10 +35,10 @@ axiosApiIntances.interceptors.response.use(
       // jika token nya tidak sesuai sama localstorage / statenya
       if (error.response.data.message === 'jwt expired') {
         localStorage.clear();
-        window.location.href = '/auth/login';
+        window.location.href = '/login';
       }
       localStorage.clear();
-      window.location.href = '/auth/login';
+      window.location.href = '/login';
     }
     return Promise.reject(error);
   }

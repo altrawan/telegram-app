@@ -1,37 +1,28 @@
 import axios from '../../utils/axios';
 
-export const register = async (data, setError) => {
-  try {
-    await axios.post('auth/register', data);
-    return true;
-  } catch (error) {
-    if (error.response) {
-      if (error.response.data.code === 422) {
-        setError(error.response.data.error);
-      } else {
-        setError(error.response.data.message);
-      }
-    } else {
-      setError(error.message);
-    }
-    return false;
-  }
+export const register = (data) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(`auth/register`, data)
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
 };
 
-export const login = async (data, setError) => {
-  try {
-    await axios.post('auth/login', data);
-    return true;
-  } catch (error) {
-    if (error.response) {
-      if (error.response.data.code === 422) {
-        setError(error.response.data.error);
-      } else {
-        setError(error.response.data.message);
-      }
-    } else {
-      setError(error.message);
-    }
-    return false;
-  }
+export const login = (data) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(`auth/login`, data)
+      .then((res) => {
+        localStorage.setItem('token', res.data.token);
+        resolve(res.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
 };

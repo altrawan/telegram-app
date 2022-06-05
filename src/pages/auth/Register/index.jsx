@@ -1,30 +1,80 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { register } from '../../../redux/actions/auth';
 import { Row, Form } from 'react-bootstrap';
 import { AuthLayout } from '../../../layouts';
 import { Card, Button, Input, PasswordInput, Separator } from '../../../components';
+import { toastr } from '../../../utils/toastr';
 import './index.scss';
 
 const index = () => {
   const navigate = useNavigate();
   const [isShowPassword, setIsShowPassword] = React.useState(false);
-  // const [form, setForm] = {
-  //   email: '',
-  //   password: ''
-  // };
+  const [isLoading, setIsLoading] = useState(false);
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    password: ''
+  });
 
   useEffect(() => {
     document.title = 'Telegram App | Register Page';
   }, []);
 
-  // const handleChange = () => {};
-
   const handleClickShowPassword = () => {
     setIsShowPassword(!isShowPassword);
   };
 
-  const handleSubmit = () => {
-    // setForm('');
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.id]: e.target.value
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!form.email || !form.password) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'All field must be filled!',
+        icon: 'error'
+      });
+    } else {
+      setIsLoading(true);
+
+      register(form)
+        .then((res) => {
+          Swal.fire({
+            title: 'Success!',
+            text: res.message,
+            icon: 'success'
+          });
+          navigate('/login');
+        })
+        .catch((err) => {
+          if (err.response.data.code === 422) {
+            const error = err.response.data.error;
+            error.map((item) => toastr(item, 'error'));
+          } else {
+            Swal.fire({
+              title: 'Error!',
+              text: err.response.data.message,
+              icon: 'error'
+            });
+          }
+        })
+        .finally(() => {
+          setForm({
+            name: '',
+            email: '',
+            password: ''
+          });
+          setIsLoading(false);
+        });
+    }
   };
 
   return (
@@ -59,6 +109,8 @@ const index = () => {
                 label="Name"
                 style={{ marginBottom: '30px' }}
                 className="style__login--textfield"
+                value={form.name}
+                onChange={handleChange}
               />
             </Row>
             <Row>
@@ -69,19 +121,30 @@ const index = () => {
                 label="Email"
                 style={{ marginBottom: '30px' }}
                 className="style__login--textfield"
+                value={form.email}
+                onChange={handleChange}
               />
             </Row>
             <Row>
               <PasswordInput
+                id="password"
+                value={form.password}
+                onChange={handleChange}
                 isShowPassword={isShowPassword}
                 style={{ marginBottom: '35px' }}
                 handleClickShowPassword={handleClickShowPassword}
                 handleMouseDownPassword={(e) => e.preventDefault()}
               />
             </Row>
-            <Button isPrimary type="submit" className="style__login--button">
-              Register
-            </Button>
+            {isLoading ? (
+              <Button isPrimary type="submit" className="style__login--button" disabled="disabled">
+                Loading...
+              </Button>
+            ) : (
+              <Button isPrimary type="submit" className="style__login--button">
+                Register
+              </Button>
+            )}
           </Form>
 
           <Separator title="Register with" />

@@ -7,13 +7,19 @@ import {
   IconPhone,
   IconBookmark,
   IconAddUser,
-  IconQuestion
+  IconQuestion,
+  IconLogout
 } from '../../../assets/icons';
 import './index.scss';
 
 const index = () => {
   const navigate = useNavigate();
   const [navbarPopup, setNavbarPopup] = useState(false);
+
+  const logout = () => {
+    localStorage.clear();
+    return navigate('/login');
+  };
 
   return (
     <div className="style__sidebar">
@@ -59,8 +65,8 @@ const index = () => {
               <img src={IconQuestion} alt="Telegram FAQ" />
               <p>Telegram FAQ</p>
             </div>
-            <div className="nav__popup--row">
-              <img src={IconQuestion} alt="Logout" />
+            <div className="nav__popup--row" onClick={logout}>
+              <img src={IconLogout} alt="Logout" />
               <p>Logout</p>
             </div>
           </div>

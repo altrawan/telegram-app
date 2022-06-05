@@ -1,29 +1,79 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Form } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+// import { CircularProgress } from '@mui/material';
+import { login } from '../../../redux/actions/auth';
 import { AuthLayout } from '../../../layouts';
 import { Card, Button, Input, PasswordInput, Separator } from '../../../components';
+import { toastr } from '../../../utils/toastr';
 import './index.scss';
 
 const index = () => {
-  const [isShowPassword, setIsShowPassword] = React.useState(false);
-  // const [form, setForm] = {
-  //   email: '',
-  //   password: ''
-  // };
+  const navigate = useNavigate();
+  const [isShowPassword, setIsShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [form, setForm] = useState({
+    email: '',
+    password: ''
+  });
 
   useEffect(() => {
     document.title = 'Telegram App | Login Page';
   }, []);
 
-  // const handleChange = () => {};
-
   const handleClickShowPassword = () => {
     setIsShowPassword(!isShowPassword);
   };
 
-  const handleSubmit = () => {
-    // setForm('');
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.id]: e.target.value
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!form.email || !form.password) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'All field must be filled!',
+        icon: 'error'
+      });
+    } else {
+      setIsLoading(true);
+
+      login(form)
+        .then((res) => {
+          Swal.fire({
+            title: 'Success!',
+            text: res.message,
+            icon: 'success'
+          });
+          navigate('/');
+        })
+        .catch((err) => {
+          if (err.response.data.code === 422) {
+            const error = err.response.data.error;
+            error.map((item) => toastr(item, 'error'));
+          } else {
+            Swal.fire({
+              title: 'Error!',
+              text: err.response.data.message,
+              icon: 'error'
+            });
+          }
+        })
+        .finally(() => {
+          setForm({
+            email: '',
+            password: ''
+          });
+          setIsLoading(false);
+        });
+    }
   };
 
   return (
@@ -41,10 +91,15 @@ const index = () => {
                 label="Email"
                 style={{ marginBottom: '30px' }}
                 className="style__login--textfield"
+                value={form.email}
+                onChange={handleChange}
               />
             </Row>
             <Row>
               <PasswordInput
+                id="password"
+                value={form.password}
+                onChange={handleChange}
                 isShowPassword={isShowPassword}
                 handleClickShowPassword={handleClickShowPassword}
                 handleMouseDownPassword={(e) => e.preventDefault()}
@@ -55,9 +110,15 @@ const index = () => {
                 Forgot Password?
               </Link>
             </Row>
-            <Button isPrimary type="submit" className="style__login--button">
-              Login
-            </Button>
+            {isLoading ? (
+              <Button isPrimary type="submit" className="style__login--button" disabled="disabled">
+                Loading...
+              </Button>
+            ) : (
+              <Button isPrimary type="submit" className="style__login--button">
+                Login
+              </Button>
+            )}
           </Form>
 
           <Separator title="Login with" />

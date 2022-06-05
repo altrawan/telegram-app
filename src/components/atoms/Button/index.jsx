@@ -2,7 +2,7 @@ import React from 'react';
 import propTypes from 'prop-types';
 import './index.scss';
 
-const Button = ({ children, isPrimary, isOutline, type, icon }) => {
+const Button = ({ children, isPrimary, isOutline, type, icon, disabled }) => {
   const icons = {
     google: (
       <svg
@@ -19,31 +19,9 @@ const Button = ({ children, isPrimary, isOutline, type, icon }) => {
     )
   };
 
-  // const handleClick = () => {
-  //   if (onClick) onClick();
-  // };
-
-  // if (isLoading) {
-  //   classname.push('disabled');
-  //   return (
-  //     <>
-  //       <span className={classname.join(' ')} style={style}>
-  //         {isLoading ? (
-  //           <>
-  //             <span className="spinner-border spinner-border-sm me-2" />
-  //             <span className="sr-only">Loading...</span>
-  //           </>
-  //         ) : (
-  //           children
-  //         )}
-  //       </span>
-  //     </>
-  //   );
-  // }
-
   if (isPrimary) {
     return (
-      <button className="style__button primary" type={type}>
+      <button className="style__button primary" type={type} disabled={disabled}>
         {children}
       </button>
     );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // import PrivateRoute from './privateRoute';
-import PublicRoute from './publicRoute';
+// import PublicRoute from './publicRoute';
 import ScrollToTop from '../utils/scrollToTop';
 
 // Auth
@@ -17,12 +17,12 @@ const router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<PublicRoute />}>
+        <Route path="/">
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="*" element={<NotFound />} />
         </Route>
-        <Route path="home/" element={<PublicRoute />}>
+        <Route path="/">
           <Route index element={<Home />} />
           <Route path="profile" element={<Profile />} />
         </Route>

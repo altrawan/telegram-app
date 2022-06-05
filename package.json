@@ -8,6 +8,7 @@
     "@fontsource/rubik": "^4.5.9",
     "@fortawesome/fontawesome-free": "^6.1.1",
     "@mui/icons-material": "^5.8.2",
+    "@mui/lab": "^5.0.0-alpha.84",
     "@mui/material": "^5.8.2",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
