@@ -107,7 +107,7 @@ const index = ({ isLoading, login, listUsers, selectReceiver }) => {
                 <MessageCard
                   avatar={item.user.avatar}
                   username={item.user.name}
-                  message={'No Chat'}
+                  message={item.message}
                   time="00.00"
                   newMessage={0}
                   onClick={() => selectReceiver(item)}

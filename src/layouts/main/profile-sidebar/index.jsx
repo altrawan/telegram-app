@@ -1,5 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import jwtDecode from 'jwt-decode';
+import Swal from 'sweetalert2';
+import { toastr } from '../../../utils/toastr';
+import { getDetail, updateUser, updatePhoto } from '../../../redux/actions/user';
+import { API_URL } from '../../../helpers/env';
 import {
   IconBell,
   IconLock,
@@ -12,7 +18,133 @@ import { AvatarDefault } from '../../../assets/images';
 import './index.scss';
 
 const index = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const data = useSelector((state) => state.detailUser);
+  const [isLoading, setIsLoading] = useState(false);
+  const token = localStorage.getItem('token');
+  const [form, setForm] = useState({
+    name: data.data.name || '',
+    email: data.data.email || '',
+    username: data.data.username || '',
+    phoneNumber: data.data.phone_number || '',
+    bio: data.data.bio || ''
+  });
+
+  useEffect(() => {
+    if (token) {
+      const decoded = jwtDecode(token);
+      dispatch(getDetail(navigate, decoded.id));
+    }
+  }, []);
+
+  const handleAvatar = (fileImage) => {
+    if (fileImage) {
+      if (fileImage.type === 'image/jpg' || fileImage.type === 'image/png') {
+        if (fileImage.size > 1048576 * 2) {
+          Swal.fire({
+            title: 'Error!',
+            text: 'File size exceeds 2 MB',
+            icon: 'error'
+          });
+        } else {
+          const formData = new FormData();
+          formData.append('avatar', fileImage);
+
+          const decoded = jwtDecode(token);
+          updatePhoto(formData)
+            .then((res) => {
+              Swal.fire({
+                title: 'Success!',
+                text: res.message,
+                icon: 'success'
+              });
+
+              dispatch(getDetail(navigate, decoded.id));
+            })
+            .catch((err) => {
+              Swal.fire({
+                title: 'Error!',
+                text: err.response.data.message,
+                icon: 'error'
+              });
+            });
+        }
+      } else {
+        Swal.fire({
+          title: 'Error!',
+          text: 'File must be jpg or png',
+          icon: 'error'
+        });
+      }
+    } else {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Failed to upload image',
+        icon: 'error'
+      });
+    }
+  };
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.id]: e.target.value
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!form.name || !form.email || !form.username || !form.phoneNumber || !form.bio) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'All field must be filled!',
+        icon: 'error'
+      });
+    } else {
+      setIsLoading(true);
+      const decoded = jwtDecode(token);
+
+      updateUser(form)
+        .then((res) => {
+          Swal.fire({
+            title: 'Success!',
+            text: res.message,
+            icon: 'success'
+          });
+
+          dispatch(getDetail(navigate, decoded.id));
+        })
+        .catch((err) => {
+          if (err.response.data.code === 422) {
+            const { error } = err.response.data;
+            error.map((e) => toastr(e, 'error'));
+          } else {
+            Swal.fire({
+              title: 'Error!',
+              text: err.response.data.message,
+              icon: 'error'
+            });
+          }
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  };
+
+  const handleReset = () => {
+    setForm({
+      name: data.data.name || '',
+      email: data.data.email || '',
+      username: data.data.username || '',
+      phoneNumber: data.data.phone_number || '',
+      bio: data.data.bio || ''
+    });
+    const decoded = jwtDecode(token);
+    dispatch(getDetail(navigate, decoded.id));
+  };
+
   return (
     <div className="style__profile">
       <div className="style__profile--header">
@@ -30,58 +162,109 @@ const index = () => {
             fill="#7E98DF"
           />
         </svg>
-        <h3 className="style__profile--title">@altrawan</h3>
+        <h3 className="style__profile--title">{data.data.username}</h3>
       </div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <section className="style__profile--section">
           <div className="style__profile--avatar">
-            <img src={AvatarDefault} alt="name" />
-            <input type="file" name="avatar" />
+            <img
+              src={`${
+                data.data.avatar
+                  ? `${API_URL}uploads/users/${data.data.avatar}`
+                  : `${API_URL}uploads/users/default.png`
+              }`}
+              alt={data.data.name}
+              onError={(e) => {
+                e.target.src = AvatarDefault;
+              }}
+            />
+            <input type="file" name="avatar" onChange={(e) => handleAvatar(e.target.files[0])} />
           </div>
-          <h3 className="style__profile--name">Gloria Mckinney</h3>
-          <p className="style__profile--username">@wdlam</p>
+          <h3 className="style__profile--name">{data.data.name}</h3>
+          <p className="style__profile--username">{data.data.username}</p>
         </section>
         <h5 className="style__profile--heading">Account</h5>
         <div className="style__profile--form">
-          <p className="style__profile--sub">Muhammad Alif</p>
+          <p className="style__profile--sub">{data.data.name}</p>
           <div>
-            <input type="text" id="name" className="subheading" placeholder="Name" />
+            <input
+              type="text"
+              id="name"
+              className="subheading"
+              placeholder="Name"
+              value={form.name}
+              onChange={handleChange}
+            />
           </div>
           <div className="divider" />
         </div>
         <div className="style__profile--form">
-          <p className="style__profile--sub">muhammadalif@gmail.com</p>
+          <p className="style__profile--sub">{data.data.email}</p>
           <div>
-            <input type="text" id="name" className="subheading" placeholder="Email" />
+            <input
+              type="text"
+              id="email"
+              className="subheading"
+              placeholder="Email"
+              value={form.email}
+              onChange={handleChange}
+            />
           </div>
           <div className="divider" />
         </div>
         <div className="style__profile--form">
-          <p className="style__profile--sub">08123456789</p>
+          <p className="style__profile--sub">{data.data.phone_number}</p>
           <div>
-            <input type="text" id="name" className="subheading" placeholder="Phone Number" />
+            <input
+              type="text"
+              id="phoneNumber"
+              className="subheading"
+              placeholder="Phone Number"
+              value={form.phoneNumber}
+              onChange={handleChange}
+            />
           </div>
           <div className="divider" />
         </div>
         <div className="style__profile--form">
-          <p className="style__profile--sub">@altrawan</p>
+          <p className="style__profile--sub">{data.data.username}</p>
           <div>
-            <input type="text" id="name" className="subheading" placeholder="Username" />
+            <input
+              type="text"
+              id="username"
+              className="subheading"
+              placeholder="Username"
+              value={form.username}
+              onChange={handleChange}
+            />
           </div>
           <div className="divider" />
         </div>
         <div className="style__profile--form">
-          <p className="style__profile--sub">I&apos;m Senior Frontend Developer from Microsoft</p>
+          <p className="style__profile--sub">{data.data.bio}</p>
           <div>
-            <textarea type="text" id="name" className="subheading" placeholder="Bio"></textarea>
+            <textarea
+              type="text"
+              id="bio"
+              className="subheading"
+              placeholder="Bio"
+              value={form.bio}
+              onChange={handleChange}></textarea>
           </div>
           <div className="divider" />
         </div>
         <div className="style__profile--action">
-          <button type="submit" className="style__profile--button primary">
-            Save
-          </button>
-          <button type="submit" className="style__profile--button secondary">
+          {isLoading ? (
+            <button type="submit" className="style__profile--button primary" disabled="disabled">
+              Loading...
+            </button>
+          ) : (
+            <button type="submit" className="style__profile--button primary">
+              Save
+            </button>
+          )}
+
+          <button className="style__profile--button secondary" onClick={handleReset}>
             Cancel
           </button>
         </div>

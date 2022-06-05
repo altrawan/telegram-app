@@ -21,7 +21,7 @@ const index = ({ children }) => {
   const [openMessage, setOpenMessage] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.userReducer);
+  const user = useSelector((state) => state.listUser);
   const token = localStorage.getItem('token');
 
   useEffect(() => {
@@ -61,8 +61,6 @@ const index = ({ children }) => {
       sender: login.id,
       receiver: item.user.id
     };
-    console.log(login);
-    console.log(item.user);
     socketio.emit('chat-history', data);
   };
 

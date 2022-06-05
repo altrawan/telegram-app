@@ -1,4 +1,4 @@
-import { GET_USER_PENDING, GET_USER_SUCCESS, GET_USER_FAILED } from '../types';
+import { GET_DETAIL_USER_PENDING, GET_DETAIL_USER_SUCCESS, GET_DETAIL_USER_FAILED } from '../types';
 
 const initialState = {
   data: [],
@@ -6,18 +6,18 @@ const initialState = {
   isError: false
 };
 
-const userDetailReducer = (state = initialState, action) => {
+const detailUser = (state = initialState, action) => {
   switch (action.type) {
-    case GET_USER_PENDING:
+    case GET_DETAIL_USER_PENDING:
       return { ...state, isLoading: true };
-    case GET_USER_SUCCESS:
+    case GET_DETAIL_USER_SUCCESS:
       return {
         ...state,
         isLoading: false,
         isError: false,
         data: action.payload.data
       };
-    case GET_USER_FAILED:
+    case GET_DETAIL_USER_FAILED:
       return {
         ...state,
         isLoading: false,
@@ -28,4 +28,4 @@ const userDetailReducer = (state = initialState, action) => {
   }
 };
 
-export default userDetailReducer;
+export default detailUser;
