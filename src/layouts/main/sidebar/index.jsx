@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SearchInput, MessageCard } from '../../../components';
+import { BulletList } from 'react-content-loader';
 import {
   IconSetting,
   IconUser,
@@ -103,8 +104,12 @@ const index = ({ login, listUsers, selectReceiver, value, onChange, handleSearch
         </div>
       </div>
       <div className="style__sidebar--message">
-        {listUsers.length ? (
-          listUsers.map((item, index) =>
+        {listUsers.isLoading ? (
+          <BulletList />
+        ) : listUsers.isError ? (
+          <div>Error</div>
+        ) : listUsers.data.length > 0 ? (
+          listUsers.data.map((item, index) =>
             item.user.id !== login.id ? (
               <div key={index}>
                 <MessageCard
@@ -123,6 +128,26 @@ const index = ({ login, listUsers, selectReceiver, value, onChange, handleSearch
         ) : (
           <div>User Tidak Ditemukan</div>
         )}
+        {/* {listUsers.length ? (
+          listUsers.map((item, index) =>
+            item.user.id !== login.id ? (
+              <div key={index}>
+                <MessageCard
+                  avatar={item.user.avatar}
+                  username={item.user.name}
+                  message={item.message}
+                  time={item.message}
+                  newMessage={0}
+                  onClick={() => selectReceiver(item)}
+                />
+              </div>
+            ) : (
+              <></>
+            )
+          )
+        ) : (
+          <div>User Tidak Ditemukan</div>
+        )} */}
       </div>
     </div>
   );

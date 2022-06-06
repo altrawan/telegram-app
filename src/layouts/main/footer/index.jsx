@@ -1,28 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { IconPlus, IconEmoticon, IconCamera } from '../../../assets/icons';
-import data from '@emoji-mart/data';
-import { Picker } from 'emoji-mart';
+import Picker from 'emoji-picker-react';
 import './index.scss';
 
-function EmojiPicker(props) {
-  const ref = React.useRef();
-
-  useEffect(() => {
-    new Picker({ ...props, data, ref });
-  }, []);
-
-  return <div ref={ref} />;
-}
-
 const index = ({ onSendMessage, message, setMessage }) => {
-  const [showEmojis, setShowEmojis] = React.useState(false);
+  const [showPicker, setShowPicker] = useState(false);
 
-  const addEmoji = (e) => {
-    let sym = e.unified.split('-');
-    let codesArray = [];
-    sym.forEach((el) => codesArray.push('0x' + el));
-    let emoji = String.fromCodePoint(...codesArray);
-    setMessage(message + emoji);
+  const onEmojiClick = (event, emojiObject) => {
+    setMessage((prevInput) => prevInput + emojiObject.emoji);
+    setShowPicker(false);
   };
 
   return (
@@ -40,7 +26,7 @@ const index = ({ onSendMessage, message, setMessage }) => {
           <div className="icon">
             <img src={IconPlus} alt="icon" />
           </div>
-          <div className="icon" onClick={() => setShowEmojis(!showEmojis)}>
+          <div className="icon" onClick={() => setShowPicker((val) => !val)}>
             <img src={IconEmoticon} alt="icon" />
           </div>
           <div className="icon">
@@ -48,11 +34,7 @@ const index = ({ onSendMessage, message, setMessage }) => {
           </div>
         </div>
       </form>
-      {showEmojis && (
-        <div>
-          <EmojiPicker onEmojiSelect={addEmoji} />
-        </div>
-      )}
+      {showPicker && <Picker pickerStyle={{ width: '100%' }} onEmojiClick={onEmojiClick} />}
     </section>
   );
 };

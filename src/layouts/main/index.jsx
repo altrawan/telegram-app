@@ -4,16 +4,21 @@ import jwtDecode from 'jwt-decode';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
 import { getUser } from '../../redux/actions/user';
+import { API_URL } from '../../helpers/env';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 import Header from './header';
 import Content from './content';
 import Sidebar from './sidebar';
 import Footer from './footer';
 import ProfileSidebar from './profile-sidebar';
+import 'react-notifications/lib/notifications.css';
 import './index.scss';
 
 const index = ({ children }) => {
   const location = useLocation();
+  const token = localStorage.getItem('token');
   const [socketio, setSocketio] = useState(null);
   const [listChat, setListChat] = useState([]);
   const [activeReceiver, setActiveReceiver] = useState({});
@@ -24,25 +29,34 @@ const index = ({ children }) => {
   const [query] = useSearchParams();
   const [querySearch, setQuerySearch] = useState('');
   const [queryLimit, setQueryLimit] = useState('');
-  const token = localStorage.getItem('token');
+  // const [login, setLogin] = useState({});
+  const decoded = jwtDecode(token);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
-    const socket = io(`http://localhost:4000/`);
-    // console.log(socket);
+    const socket = io(API_URL);
     socket.on('send-message-response', (response) => {
       const receiver = JSON.parse(localStorage.getItem('receiver'));
-      if (
-        receiver.user.id === response[0].sender_id ||
-        receiver.user.id === response[0].receiver_id
-      ) {
-        setListChat(response);
+      if (response.length) {
+        if (
+          receiver.user.id === response[0].sender_id ||
+          receiver.user.id === response[0].receiver_id
+        ) {
+          setListChat(response);
+        } else {
+          createNotification(
+            response[response.length - 1].sender,
+            response[response.length - 1].message
+          );
+        }
       }
     });
     setSocketio(socket);
   }, []);
 
-  const [listUsers, setListUsers] = useState([]);
-  const [login, setLogin] = useState({});
+  const createNotification = (sender, message) => {
+    return NotificationManager.info(message, `New chat from: ${sender}`, 3000);
+  };
 
   useEffect(() => {
     let url = 'user?';
@@ -60,11 +74,9 @@ const index = ({ children }) => {
     }
 
     dispatch(getUser(navigate, url));
-    // console.log(user.data);
-    setListUsers(user.data);
-    if (token) {
-      setLogin(jwtDecode(token));
-    }
+    // if (token) {
+    //   setLogin(jwtDecode(token));
+    // }
   }, [dispatch, navigate, query]);
 
   const filter = () => {
@@ -86,38 +98,37 @@ const index = ({ children }) => {
     setListChat([]);
     setActiveReceiver(item);
     localStorage.setItem('receiver', JSON.stringify(item));
-    socketio.emit('join-room', login);
+    // socketio.emit('join-room', login);
+    socketio.emit('join-room', decoded);
     const data = {
-      sender: login.id,
+      sender: decoded.id,
       receiver: item.user.id
     };
     socketio.emit('chat-history', data);
   };
 
-  const [message, setMessage] = useState('');
-
   const onSendMessage = (e) => {
     e.preventDefault();
-    // const user = JSON.parse(localStorage.getItem('user'));
     const decoded = jwtDecode(token);
     const receiver = JSON.parse(localStorage.getItem('receiver'));
-    // console.log(receiver);
     const payload = {
       sender_id: decoded.id,
-      receiver_id: activeReceiver.user.id,
+      receiver_id: receiver.user.id,
       sender: decoded.name,
-      receiver: receiver.name,
+      receiver: receiver.user.name,
       sender_avatar: decoded.avatar,
-      receiver_avatar: activeReceiver.user.avatar,
+      receiver_avatar: receiver.user.avatar,
+      type: 0,
       message
     };
+    console.log(listChat);
     setListChat([...listChat, payload]);
     const data = {
       sender: decoded.id,
       receiver: activeReceiver.user.id,
+      type: 0,
       message
     };
-    // console.log(data);
     socketio.emit('send-message', data);
     setMessage('');
   };
@@ -125,7 +136,28 @@ const index = ({ children }) => {
   const handleSearch = (e) => {
     e.preventDefault();
     filter();
-    window.location.reload();
+  };
+
+  const handleDelete = (e, id) => {
+    e.preventDefault();
+    const payload = {
+      id,
+      sender: decoded.id,
+      receiver: activeReceiver.user.id
+    };
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Once deleted, you will not be able to recover this experience',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#7e98df',
+      cancelButtonColor: '#c61212',
+      confirmButtonText: 'Yes, I sure'
+    }).then(async (deleted) => {
+      if (deleted.isConfirmed) {
+        socketio.emit('delete-message', payload);
+      }
+    });
   };
 
   return (
@@ -135,8 +167,8 @@ const index = ({ children }) => {
           <ProfileSidebar />
         ) : (
           <Sidebar
-            login={login}
-            listUsers={listUsers}
+            login={decoded}
+            listUsers={user}
             selectReceiver={selectReceiver}
             value={querySearch}
             onChange={(e) => setQuerySearch(e.target.value)}
@@ -154,13 +186,14 @@ const index = ({ children }) => {
           <div className="style__home--room">
             <Header activeReceiver={activeReceiver} />
 
-            <Content listChat={listChat} login={login} />
+            <Content listChat={listChat} login={decoded} handleDelete={handleDelete} />
             {children}
 
             <Footer onSendMessage={onSendMessage} message={message} setMessage={setMessage} />
           </div>
         </div>
       )}
+      <NotificationContainer />
     </div>
   );
 };

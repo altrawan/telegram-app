@@ -2,10 +2,8 @@ import React, { useEffect } from 'react';
 import moment from 'moment';
 import { AvatarDefault } from '../../../assets/images';
 import { API_URL } from '../../../helpers/env';
-import Swal from 'sweetalert2';
-import { deleteChat } from '../../../redux/actions/chat';
 
-const index = ({ listChat, login }) => {
+const index = ({ listChat, login, handleDelete }) => {
   moment.locale('id');
   const messagesEndRef = React.useRef(null);
 
@@ -13,40 +11,11 @@ const index = ({ listChat, login }) => {
     messagesEndRef.current?.scrollIntoView();
   };
 
+  console.log(login);
+
   useEffect(() => {
     scrollToBottom();
   }, [listChat]);
-
-  const handleDelete = (e, id) => {
-    e.preventDefault();
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'Once deleted, you will not be able to recover this experience',
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonColor: '#7e98df',
-      cancelButtonColor: '#c61212',
-      confirmButtonText: 'Yes, I sure'
-    }).then(async (deleted) => {
-      if (deleted.isConfirmed) {
-        try {
-          const res = await deleteChat(id);
-          Swal.fire({
-            title: 'Success',
-            text: res.message,
-            icon: 'success'
-          });
-          window.location.reload();
-        } catch (err) {
-          Swal.fire({
-            title: 'Failed',
-            text: err.response.data.message,
-            icon: 'error'
-          });
-        }
-      }
-    });
-  };
 
   return (
     <section className="style__home--chat">

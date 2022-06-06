@@ -1,0 +1,14 @@
+.style__contact {
+  background-color: var(--text-white);
+  padding: 40px 30px;
+  width: 350px;
+  border-left: 1px solid #e5e5e5;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+
+  @media screen and (max-width: 992px) {
+    width: 250px;
+  }
+}
