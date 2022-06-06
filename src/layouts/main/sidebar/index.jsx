@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import ContentLoader from 'react-content-loader';
 import { useNavigate } from 'react-router-dom';
 import { SearchInput, MessageCard } from '../../../components';
 import {
@@ -13,7 +12,7 @@ import {
 } from '../../../assets/icons';
 import './index.scss';
 
-const index = ({ isLoading, login, listUsers, selectReceiver }) => {
+const index = ({ login, listUsers, selectReceiver, value, onChange, handleSearch }) => {
   const navigate = useNavigate();
   const [navbarPopup, setNavbarPopup] = useState(false);
 
@@ -21,8 +20,6 @@ const index = ({ isLoading, login, listUsers, selectReceiver }) => {
     localStorage.clear();
     return navigate('/login');
   };
-
-  // console.log(listUsers);
 
   return (
     <div className="style__sidebar">
@@ -76,7 +73,15 @@ const index = ({ isLoading, login, listUsers, selectReceiver }) => {
         )}
       </div>
       <div className="style__sidebar--action">
-        <SearchInput id="search" name="search" placeholder="Type your message..." />
+        <form onSubmit={handleSearch}>
+          <SearchInput
+            id="search"
+            name="search"
+            placeholder="Type your message..."
+            value={value}
+            onChange={onChange}
+          />
+        </form>
         <div className="style__sidebar--plus">
           <svg
             width="23"
@@ -98,9 +103,7 @@ const index = ({ isLoading, login, listUsers, selectReceiver }) => {
         </div>
       </div>
       <div className="style__sidebar--message">
-        {isLoading ? (
-          <ContentLoader />
-        ) : (
+        {listUsers.length ? (
           listUsers.map((item, index) =>
             item.user.id !== login.id ? (
               <div key={index}>
@@ -108,7 +111,7 @@ const index = ({ isLoading, login, listUsers, selectReceiver }) => {
                   avatar={item.user.avatar}
                   username={item.user.name}
                   message={item.message}
-                  time="00.00"
+                  time={item.message}
                   newMessage={0}
                   onClick={() => selectReceiver(item)}
                 />
@@ -117,6 +120,8 @@ const index = ({ isLoading, login, listUsers, selectReceiver }) => {
               <></>
             )
           )
+        ) : (
+          <div>User Tidak Ditemukan</div>
         )}
       </div>
     </div>

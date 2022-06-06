@@ -8,7 +8,7 @@ import {
   GET_DETAIL_USER_FAILED
 } from '../types';
 
-export const getUser = (navigate, limit) => async (dispatch) => {
+export const getUser = (navigate, url) => async (dispatch) => {
   try {
     dispatch({
       type: GET_USER_PENDING,
@@ -17,7 +17,7 @@ export const getUser = (navigate, limit) => async (dispatch) => {
 
     const response = await axios({
       method: 'GET',
-      url: `user?limit=${limit}`
+      url: `${url}`
     });
 
     dispatch({

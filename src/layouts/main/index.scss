@@ -91,6 +91,7 @@
         margin-top: auto;
         width: 64px;
         height: 64px;
+        border-radius: 20px;
 
         img {
           width: 100%;
@@ -118,6 +119,29 @@
 
           @media screen and (max-width: 992px) {
             max-width: 150px;
+          }
+        }
+
+        .extra {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+
+          &.me {
+            align-items: flex-end;
+          }
+
+          &.others {
+            align-items: flex-start;
+          }
+
+          svg {
+            margin-bottom: 15px;
+
+            &:hover {
+              cursor: pointer;
+              opacity: 0.5;
+            }
           }
         }
 

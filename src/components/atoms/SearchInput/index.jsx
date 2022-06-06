@@ -1,7 +1,7 @@
 import React from 'react';
 import './index.scss';
 
-const index = ({ id, name, placeholder }) => {
+const index = ({ id, name, placeholder, value, onChange }) => {
   return (
     <div className="style__search">
       <svg
@@ -22,7 +22,7 @@ const index = ({ id, name, placeholder }) => {
           fill="#848484"
         />
       </svg>
-      <input id={id} name={name} placeholder={placeholder} />
+      <input id={id} name={name} placeholder={placeholder} value={value} onChange={onChange} />
     </div>
   );
 };

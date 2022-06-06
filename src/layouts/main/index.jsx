@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import jwtDecode from 'jwt-decode';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUser } from '../../redux/actions/user';
@@ -14,7 +14,6 @@ import './index.scss';
 
 const index = ({ children }) => {
   const location = useLocation();
-  const [isLoading, setIsLoading] = useState(false);
   const [socketio, setSocketio] = useState(null);
   const [listChat, setListChat] = useState([]);
   const [activeReceiver, setActiveReceiver] = useState({});
@@ -22,6 +21,9 @@ const index = ({ children }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.listUser);
+  const [query] = useSearchParams();
+  const [querySearch, setQuerySearch] = useState('');
+  const [queryLimit, setQueryLimit] = useState('');
   const token = localStorage.getItem('token');
 
   useEffect(() => {
@@ -41,15 +43,43 @@ const index = ({ children }) => {
 
   const [listUsers, setListUsers] = useState([]);
   const [login, setLogin] = useState({});
+
   useEffect(() => {
-    setIsLoading(true);
-    dispatch(getUser(navigate, 100));
+    let url = 'user?';
+
+    setQuerySearch('');
+    if (query.get('search')) {
+      setQuerySearch(query.get('search'));
+      url += `&search=${query.get('search')}`;
+    }
+
+    setQueryLimit('');
+    if (query.get('limit')) {
+      setQueryLimit(query.get('limit'));
+      url += `&limit=${query.get('limit')}`;
+    }
+
+    dispatch(getUser(navigate, url));
+    // console.log(user.data);
     setListUsers(user.data);
     if (token) {
       setLogin(jwtDecode(token));
     }
-    setIsLoading(false);
-  }, []);
+  }, [dispatch, navigate, query]);
+
+  const filter = () => {
+    let url = '/?';
+
+    if (querySearch) {
+      url += `&search=${querySearch}`;
+    }
+
+    if (queryLimit) {
+      url += `&limit=${queryLimit}`;
+    }
+
+    return navigate(url);
+  };
 
   const selectReceiver = (item) => {
     setOpenMessage(true);
@@ -71,9 +101,14 @@ const index = ({ children }) => {
     // const user = JSON.parse(localStorage.getItem('user'));
     const decoded = jwtDecode(token);
     const receiver = JSON.parse(localStorage.getItem('receiver'));
+    // console.log(receiver);
     const payload = {
-      sender: login.fullname,
-      receiver: receiver.fullname,
+      sender_id: decoded.id,
+      receiver_id: activeReceiver.user.id,
+      sender: decoded.name,
+      receiver: receiver.name,
+      sender_avatar: decoded.avatar,
+      receiver_avatar: activeReceiver.user.avatar,
       message
     };
     setListChat([...listChat, payload]);
@@ -82,9 +117,15 @@ const index = ({ children }) => {
       receiver: activeReceiver.user.id,
       message
     };
-    console.log(data);
+    // console.log(data);
     socketio.emit('send-message', data);
     setMessage('');
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    filter();
+    window.location.reload();
   };
 
   return (
@@ -94,10 +135,12 @@ const index = ({ children }) => {
           <ProfileSidebar />
         ) : (
           <Sidebar
-            isLoading={isLoading}
             login={login}
             listUsers={listUsers}
             selectReceiver={selectReceiver}
+            value={querySearch}
+            onChange={(e) => setQuerySearch(e.target.value)}
+            handleSearch={handleSearch}
           />
         )}
       </aside>
