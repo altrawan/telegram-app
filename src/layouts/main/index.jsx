@@ -121,7 +121,6 @@ const index = ({ children }) => {
       type: 0,
       message
     };
-    console.log(listChat);
     setListChat([...listChat, payload]);
     const data = {
       sender: decoded.id,
@@ -156,6 +155,7 @@ const index = ({ children }) => {
     }).then(async (deleted) => {
       if (deleted.isConfirmed) {
         socketio.emit('delete-message', payload);
+        setListChat([...listChat, payload]);
       }
     });
   };
