@@ -39,5 +39,14 @@
   &--action {
     display: flex;
     gap: 22px;
+
+    .icon {
+      img {
+        &:hover {
+          opacity: 0.5;
+          cursor: pointer;
+        }
+      }
+    }
   }
 }
