@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-// import { CircularProgress } from '@mui/material';
 import { login } from '../../../redux/actions/auth';
 import { AuthLayout } from '../../../layouts';
 import { Card, Button, Input, PasswordInput, Separator } from '../../../components';
@@ -82,8 +80,8 @@ const index = () => {
         <section className="style__login">
           <h3 className="style__login--title">Login</h3>
           <p className="style__login--subtitle">Hi, Welcome back!</p>
-          <Form onSubmit={handleSubmit}>
-            <Row>
+          <form onSubmit={handleSubmit}>
+            <div>
               <Input
                 type="email"
                 id="email"
@@ -94,8 +92,8 @@ const index = () => {
                 value={form.email}
                 onChange={handleChange}
               />
-            </Row>
-            <Row>
+            </div>
+            <div>
               <PasswordInput
                 id="password"
                 value={form.password}
@@ -104,12 +102,12 @@ const index = () => {
                 handleClickShowPassword={handleClickShowPassword}
                 handleMouseDownPassword={(e) => e.preventDefault()}
               />
-            </Row>
-            <Row>
+            </div>
+            <div>
               <Link to="/forgot-password" className="style__login--forgot">
                 Forgot Password?
               </Link>
-            </Row>
+            </div>
             {isLoading ? (
               <Button isPrimary type="submit" className="style__login--button" disabled="disabled">
                 Loading...
@@ -119,7 +117,7 @@ const index = () => {
                 Login
               </Button>
             )}
-          </Form>
+          </form>
 
           <Separator title="Login with" />
           <Button isOutline type="button" icon="google">

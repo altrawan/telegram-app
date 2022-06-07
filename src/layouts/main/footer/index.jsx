@@ -13,15 +13,18 @@ const index = ({ onSendMessage, message, setMessage }) => {
 
   return (
     <section className="style__footer">
-      <form className="style__footer--form" onSubmit={onSendMessage}>
-        <input
-          type="text"
-          name="message"
-          autoComplete="off"
-          placeholder="Type your message"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
+      <div className="style__footer--form">
+        <form onSubmit={onSendMessage}>
+          <input
+            type="text"
+            name="message"
+            autoComplete="off"
+            placeholder="Type your message"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+          <input type="submit" style={{ display: 'none' }} disabled={!message} />
+        </form>
         <div className="style__footer--action">
           <div className="icon">
             <img src={IconPlus} alt="icon" />
@@ -33,7 +36,7 @@ const index = ({ onSendMessage, message, setMessage }) => {
             <img src={IconCamera} alt="icon" />
           </div>
         </div>
-      </form>
+      </div>
       {showPicker && <Picker pickerStyle={{ width: '100%' }} onEmojiClick={onEmojiClick} />}
     </section>
   );

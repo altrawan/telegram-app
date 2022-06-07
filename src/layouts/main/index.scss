@@ -120,12 +120,22 @@
           @media screen and (max-width: 992px) {
             max-width: 150px;
           }
+
+          &:hover + .extra .time {
+            display: block;
+          }
+
+          &:hover + .extra .svg {
+            margin-top: 0px;
+          }
         }
 
         .extra {
           display: flex;
           flex-direction: column;
-          justify-content: space-between;
+          justify-content: center;
+          // background-color: blue;
+          gap: 8px;
 
           &.me {
             align-items: flex-end;
@@ -134,22 +144,32 @@
           &.others {
             align-items: flex-start;
           }
+        }
 
-          svg {
-            margin-bottom: 15px;
-
-            &:hover {
-              cursor: pointer;
-              opacity: 0.5;
+        .delete {
+          &.me {
+            svg {
+              display: block;
+              &:hover {
+                cursor: pointer;
+                opacity: 0.5;
+              }
+            }
+          }
+          &.others {
+            svg {
+              display: none;
             }
           }
         }
 
         .time {
+          // background-color: red;
           font-family: 'Rubik', sans-serif;
           color: #bebebe;
           font-size: 14px;
-          margin-top: 6px;
+          // margin-top: 6px;
+          display: none;
         }
       }
     }

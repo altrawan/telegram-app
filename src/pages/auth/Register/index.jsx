@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { register } from '../../../redux/actions/auth';
-import { Row, Form } from 'react-bootstrap';
 import { AuthLayout } from '../../../layouts';
 import { Card, Button, Input, PasswordInput, Separator } from '../../../components';
 import { toastr } from '../../../utils/toastr';
@@ -101,8 +100,8 @@ const index = () => {
             <h3 className="style__login--title">Register</h3>
           </div>
           <p className="style__login--subtitle">Let&apos;s create your account!</p>
-          <Form onSubmit={handleSubmit}>
-            <Row>
+          <form onSubmit={handleSubmit}>
+            <div>
               <Input
                 id="name"
                 name="name"
@@ -112,8 +111,8 @@ const index = () => {
                 value={form.name}
                 onChange={handleChange}
               />
-            </Row>
-            <Row>
+            </div>
+            <div>
               <Input
                 type="email"
                 id="email"
@@ -124,8 +123,8 @@ const index = () => {
                 value={form.email}
                 onChange={handleChange}
               />
-            </Row>
-            <Row>
+            </div>
+            <div>
               <PasswordInput
                 id="password"
                 value={form.password}
@@ -135,7 +134,7 @@ const index = () => {
                 handleClickShowPassword={handleClickShowPassword}
                 handleMouseDownPassword={(e) => e.preventDefault()}
               />
-            </Row>
+            </div>
             {isLoading ? (
               <Button isPrimary type="submit" className="style__login--button" disabled="disabled">
                 Loading...
@@ -145,7 +144,7 @@ const index = () => {
                 Register
               </Button>
             )}
-          </Form>
+          </form>
 
           <Separator title="Register with" />
           <Button isOutline type="button" icon="google">

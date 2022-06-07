@@ -165,7 +165,6 @@ const index = ({ children }) => {
     }).then(async (deleted) => {
       if (deleted.isConfirmed) {
         socketio.emit('delete-message', payload);
-        setListChat([...listChat, payload]);
       }
     });
   };
