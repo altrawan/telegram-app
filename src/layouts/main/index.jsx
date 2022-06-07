@@ -8,11 +8,14 @@ import Swal from 'sweetalert2';
 import { getUser } from '../../redux/actions/user';
 import { API_URL } from '../../helpers/env';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import Drawer from 'react-modern-drawer';
 import Header from './header';
 import Content from './content';
 import Sidebar from './sidebar';
 import Footer from './footer';
 import ProfileSidebar from './profile-sidebar';
+import ContactSidebar from './contact-sidebar';
+import 'react-modern-drawer/dist/index.css';
 import 'react-notifications/lib/notifications.css';
 import './index.scss';
 
@@ -32,6 +35,11 @@ const index = ({ children }) => {
   // const [login, setLogin] = useState({});
   const decoded = jwtDecode(token);
   const [message, setMessage] = useState('');
+  const [isOpen, setIsOpen] = React.useState(false);
+  const toggleDrawer = () => {
+    setIsOpen((prevState) => !prevState);
+  };
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const socket = io(API_URL);
@@ -55,7 +63,7 @@ const index = ({ children }) => {
   }, []);
 
   const createNotification = (sender, message) => {
-    return NotificationManager.info(message, `New chat from: ${sender}`, 3000);
+    return NotificationManager.info(message, `New message from: ${sender}`, 3000);
   };
 
   useEffect(() => {
@@ -94,6 +102,7 @@ const index = ({ children }) => {
   };
 
   const selectReceiver = (item) => {
+    setIsLoading(true);
     setOpenMessage(true);
     setListChat([]);
     setActiveReceiver(item);
@@ -105,6 +114,7 @@ const index = ({ children }) => {
       receiver: item.user.id
     };
     socketio.emit('chat-history', data);
+    setIsLoading(false);
   };
 
   const onSendMessage = (e) => {
@@ -184,7 +194,7 @@ const index = ({ children }) => {
       ) : (
         <div className="style__home--main">
           <div className="style__home--room">
-            <Header activeReceiver={activeReceiver} />
+            <Header activeReceiver={activeReceiver} onClick={toggleDrawer} />
 
             <Content listChat={listChat} login={decoded} handleDelete={handleDelete} />
             {children}
@@ -193,6 +203,10 @@ const index = ({ children }) => {
           </div>
         </div>
       )}
+      <Drawer open={isOpen} onClose={toggleDrawer} direction="right">
+        <ContactSidebar activeReceiver={activeReceiver} isLoading={isLoading} />
+      </Drawer>
+
       <NotificationContainer />
     </div>
   );

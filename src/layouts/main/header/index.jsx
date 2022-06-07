@@ -1,17 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { AvatarDefault } from '../../../assets/images';
 import { API_URL } from '../../../helpers/env';
 import './index.scss';
 
-const index = ({ activeReceiver }) => {
-  const [showContactInfo, setShowContactInfo] = useState(false);
+const index = ({ activeReceiver, onClick }) => {
   return (
     <section className="style__header">
-      <div
-        className="style__header--wrapper"
-        onClick={() => {
-          return showContactInfo ? setShowContactInfo(false) : setShowContactInfo(true);
-        }}>
+      <div className="style__header--wrapper" onClick={onClick}>
         <div className="style__header--avatar">
           <img
             src={`${
