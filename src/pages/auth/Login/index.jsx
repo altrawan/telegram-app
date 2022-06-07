@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { login } from '../../../redux/actions/auth';
 import { AuthLayout } from '../../../layouts';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { Card, Button, Input, PasswordInput, Separator } from '../../../components';
 import { toastr } from '../../../utils/toastr';
 import './index.scss';
@@ -110,6 +112,7 @@ const index = () => {
             </div>
             {isLoading ? (
               <Button isPrimary type="submit" className="style__login--button" disabled="disabled">
+                <FontAwesomeIcon icon={faSpinner} spin />
                 Loading...
               </Button>
             ) : (

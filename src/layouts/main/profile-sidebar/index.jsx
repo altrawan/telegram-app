@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import jwtDecode from 'jwt-decode';
 import Swal from 'sweetalert2';
 import { toastr } from '../../../utils/toastr';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { getDetail, updateUser, updatePhoto } from '../../../redux/actions/user';
 import { API_URL } from '../../../helpers/env';
 import {
@@ -40,7 +42,11 @@ const index = () => {
 
   const handleAvatar = (fileImage) => {
     if (fileImage) {
-      if (fileImage.type === 'image/jpg' || fileImage.type === 'image/png') {
+      if (
+        fileImage.type === 'image/jpg' ||
+        fileImage.type === 'image/jpeg' ||
+        fileImage.type === 'image/png'
+      ) {
         if (fileImage.size > 1048576 * 2) {
           Swal.fire({
             title: 'Error!',
@@ -256,7 +262,7 @@ const index = () => {
         <div className="style__profile--action">
           {isLoading ? (
             <button type="submit" className="style__profile--button primary" disabled="disabled">
-              Loading...
+              <FontAwesomeIcon icon={faSpinner} spin />
             </button>
           ) : (
             <button type="submit" className="style__profile--button primary">

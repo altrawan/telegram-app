@@ -1,5 +1,5 @@
 .style__sidebar {
-  position: sticky;
+  position: relative;
   background-color: var(--text-white);
   top: 0;
   padding: 45px 30px;
@@ -9,7 +9,7 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 50px;
-    position: sticky;
+    position: relative;
     top: 0;
   }
 
