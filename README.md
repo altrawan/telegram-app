@@ -1,70 +1,196 @@
-# Getting Started with Create React App
+<div id="top"></div>
+<p align="center">
+  <a href="https://github.com/altrawan/mama-recipe-app">
+    <img src="./screenshoots/Logo.png"  width="150px" alt="Logo">
+  </a>
+</p>
+<h3 align="center">Telegram Chat</h3>
+<p align="center">
+  Send your Message to the World🌎.
+  <br/>
+  <a href="#table-of-contents">
+    <strong>Explore the docs »</strong>
+  </a>
+  <br /><br/>
+  <a href="https://bit.ly/telegram-chatting">View Demo</a>
+  ·
+  <a href="https://github.com/altrawan/telegram-app/issues">Report Bug</a>
+  ·
+  <a href="https://github.com/altrawan/telegram-app/issues">Request Feature</a>
+</p>
+<p align="center">
+  <a href="https://reactjs.org/">
+    <img src="https://img.shields.io/badge/React-v18-blue?style=flat">
+  </a>                                  
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<!-- TABLE OF CONTENTS -->
+ ## Table of Contents
 
-## Available Scripts
+* [About the Project](#about-the-project)
+  * [Built With](#built-with)
+* [Getting Started](#getting-started)
+  * [Prerequisites](#prerequisites)
+  * [Installation](#installation)
+  * [Setup .env](#setup-env)
+* [Screenshots](#screenshoots)
+* [Contributing](#contributing)
+* [Related Project](#related-project)
+* [Contact](#contact)
+* [License](#license)
 
-In the project directory, you can run:
+<!-- ABOUT THE PROJECT -->
+## About The Project
+-
 
-### `npm start`
+### Built With
+This app was built with some technologies below:
+* [SCSS](https://developer.mozilla.org/en-US/docs/Web/CSS?retiredLocale=id)
+* [Javascript](https://www.javascript.com/)
+* [React](https://vuejs.org/v2)
+* [Axios](https://axios-http.com/)
+* [React Redux](https://react-redux.js.org/introduction/getting-started)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<!-- GETTING STARTED -->
+## Getting Started
 
-### `npm test`
+### Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Before going to the installation stage there are some software that must be installed first.
 
-### `npm run build`
+* [NodeJs](https://nodejs.org/en/download/)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Installation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+If you want to run this project locally, We recommend you to configure the [back-end](https://github.com/altrawan/food-recipe-api) first before configuring this repo front-end.
+- Clone the repo
+```
+git clone https://github.com/altrawan/mama-recipe-app.git
+```
+- Go To Folder Repo
+```
+cd mama-recipe-app
+```
+- Install Module
+```
+npm install
+```
+- <a href="#setup-env">Setup .env</a>
+- Type ` npm run dev` To Start Website
+- Type ` npm run start` To Start Production
 
-### `npm run eject`
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Setup .env
+Create .env file in your root project folder.
+```
+REACT_APP_DEV=[BACKEND_URL_DEVELOPMENT]
+REACT_APP_PROD=[BACKEND_URL_PRODUCTION]
+REACT_APP_STAGING=[dev / prod]
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Screenshoots
+<p align="center" display=flex>
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   <img src="screenshoots/Landing Page - Desktop.png" alt="Landing Page" width=50% />
+   <p align="center">Landing Page</p>
 
-## Learn More
+<table>
+ 
+  <tr>
+    <td><image src="screenshoots/Login Page - Desktop.png" alt="Login Page" width=100%></td>
+    <td><image src="screenshoots/Register Page - Desktop.png" alt="Register Page" width=100%/></td>
+  </tr>
+   <tr>
+    <td>Login Page</td>
+    <td>Register Page</td>
+  </tr>
+  
+  <tr>
+    <td><image src="screenshoots/Forgot Password Page - Desktop.png" alt="Forgot Password Page" width=100%></td>
+    <td><image src="screenshoots/Reset Password Page - Desktop.png" alt="Reset Password Page" width=100%/></td>
+  </tr>
+  <tr>
+    <td>Forgot Password Page</td>
+    <td>Reset Password Page</td>
+  </tr>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+  <tr>
+    <td><image src="screenshoots/Detail Recipe Page - Desktop.png" alt="Detail Recipe Page" width=100%></td>
+    <td><image src="screenshoots/List Recipe Page - Desktop.png" alt="List Recipe Page" width=100%></td>
+  </tr>
+  <tr>
+      <td>Detail Recipe Page</td>
+      <td>List Recipe Page</td>
+  </tr>
+  
+  <tr>
+    <td><image src="screenshoots/Add Recipe Page - Desktop.png" alt="Add Recipe Page" width=100%/></td>
+    <td><image src="screenshoots/Profile Page - Desktop.png" alt="Profile Page"' width=100%></td>
+  </tr>
+  <tr>
+    <td>Add Recipe Page</td>
+    <td>Profile Page</td>
+  </tr>
+  
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  <tr>
+    <td><image src="screenshoots/Edit Profile Page - Desktop.png" alt="Profile Page" width=100%></td> 
+    <td><image src="screenshoots/Change Password Page - Desktop.png" alt="Profile Page" width=100%></td>  
+  </tr>
+  <tr>
+    <td>Edit Profile Page</td>
+    <td>Change Password Page</td>
+  </tr>
+   
+  <tr>
+      <td><image src="screenshoots/Detail Video Page - Desktop.png" alt="Detail Video Page" width=100%/></td>
+  </tr>
+  <tr>
+      <td>Detail Video Page</td>
+  </tr>
+</table>
+      
+</p>
 
-### Code Splitting
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Contributing
 
-### Analyzing the Bundle Size
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-### Making a Progressive Web App
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Related Project
+:rocket: [`Backend Mama Recipe`](https://github.com/altrawan/food-recipe-api)
 
-### Advanced Configuration
+:rocket: [`Frontend Mama Recipe`](https://github.com/altrawan/mama-recipe-app)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+:rocket: [`Demo Mama Recipe`](https://bit.ly/mama-recipe-app)
 
-### Deployment
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Contact
 
-### `npm run build` fails to minify
+My Email : muhammadalifputra8888@gmail.com
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Project Link: [https://github.com/altrawan/mama-recipe-app](https://github.com/altrawan/mama-recipe-app)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## License
+Distributed under the [MIT](/LICENSE) License.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
