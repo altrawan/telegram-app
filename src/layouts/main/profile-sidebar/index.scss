@@ -1,5 +1,17 @@
 .style__profile {
   padding: 45px 30px;
+  overflow-y: scroll;
+  /* Firefox */
+  scrollbar-width: none;
+  /* Internet Explorer 10+ */
+  -ms-overflow-style: none;
+  // width: 28%;
+
+  /* Not Showing Scrollbar in Google Chrome */
+  &::-webkit-scrollbar {
+    -webkit-appearance: none;
+  }
+  // width: 200vw;
 
   &--header {
     display: flex;

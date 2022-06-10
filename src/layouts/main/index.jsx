@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import jwtDecode from 'jwt-decode';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
@@ -14,13 +14,12 @@ import Content from './content';
 import Sidebar from './sidebar';
 import Footer from './footer';
 import ProfileSidebar from './profile-sidebar';
-import ContactSidebar from './contact-sidebar';
+// import ContactSidebar from './contact-sidebar';
 import 'react-modern-drawer/dist/index.css';
 import 'react-notifications/lib/notifications.css';
 import './index.scss';
 
 const index = ({ children }) => {
-  const location = useLocation();
   const token = localStorage.getItem('token');
   const [socketio, setSocketio] = useState(null);
   const [listChat, setListChat] = useState([]);
@@ -35,11 +34,11 @@ const index = ({ children }) => {
   // const [login, setLogin] = useState({});
   const decoded = jwtDecode(token);
   const [message, setMessage] = useState('');
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState);
   };
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const socket = io(API_URL);
@@ -102,7 +101,7 @@ const index = ({ children }) => {
   };
 
   const selectReceiver = (item) => {
-    setIsLoading(true);
+    // setIsLoading(true);
     setOpenMessage(true);
     setListChat([]);
     setActiveReceiver(item);
@@ -114,7 +113,7 @@ const index = ({ children }) => {
       receiver: item.user.id
     };
     socketio.emit('chat-history', data);
-    setIsLoading(false);
+    // setIsLoading(false);
   };
 
   const onSendMessage = (e) => {
@@ -172,18 +171,14 @@ const index = ({ children }) => {
   return (
     <div className="style__home">
       <aside>
-        {location.pathname === '/profile' ? (
-          <ProfileSidebar />
-        ) : (
-          <Sidebar
-            login={decoded}
-            listUsers={user}
-            selectReceiver={selectReceiver}
-            value={querySearch}
-            onChange={(e) => setQuerySearch(e.target.value)}
-            handleSearch={handleSearch}
-          />
-        )}
+        <Sidebar
+          login={decoded}
+          listUsers={user}
+          selectReceiver={selectReceiver}
+          value={querySearch}
+          onChange={(e) => setQuerySearch(e.target.value)}
+          handleSearch={handleSearch}
+        />
       </aside>
 
       {!openMessage ? (
@@ -202,8 +197,8 @@ const index = ({ children }) => {
           </div>
         </div>
       )}
-      <Drawer open={isOpen} onClose={toggleDrawer} direction="right">
-        <ContactSidebar activeReceiver={activeReceiver} isLoading={isLoading} />
+      <Drawer open={isOpen} onClose={toggleDrawer} direction="left" size={370}>
+        <ProfileSidebar />
       </Drawer>
 
       <NotificationContainer />
