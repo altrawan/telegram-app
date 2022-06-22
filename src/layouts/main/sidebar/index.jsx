@@ -42,7 +42,7 @@ const index = ({ login, listUsers, selectReceiver, value, onChange, handleSearch
         </svg>
         {navbarPopup && (
           <div className="nav__popup">
-            <div className="nav__popup--row">
+            <div className="nav__popup--row" onClick={() => navigate('/profile')}>
               <img src={IconSetting} alt="Setting" />
               <p>Settings</p>
             </div>

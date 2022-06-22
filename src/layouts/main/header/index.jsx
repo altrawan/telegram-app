@@ -6,7 +6,7 @@ import './index.scss';
 const index = ({ activeReceiver, onClick }) => {
   return (
     <section className="style__header">
-      <div className="style__header--wrapper" onClick={onClick}>
+      <div className="style__header--wrapper">
         <div className="style__header--avatar">
           <img
             src={`${
@@ -27,6 +27,7 @@ const index = ({ activeReceiver, onClick }) => {
       </div>
       <div className="style__header--more">
         <svg
+          onClick={onClick}
           width="24"
           height="24"
           viewBox="0 0 24 24"

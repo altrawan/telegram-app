@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import jwtDecode from 'jwt-decode';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
@@ -14,12 +14,13 @@ import Content from './content';
 import Sidebar from './sidebar';
 import Footer from './footer';
 import ProfileSidebar from './profile-sidebar';
-// import ContactSidebar from './contact-sidebar';
+import ContactSidebar from './contact-sidebar';
 import 'react-modern-drawer/dist/index.css';
 import 'react-notifications/lib/notifications.css';
 import './index.scss';
 
 const index = ({ children }) => {
+  const location = useLocation();
   const token = localStorage.getItem('token');
   const [socketio, setSocketio] = useState(null);
   const [listChat, setListChat] = useState([]);
@@ -34,11 +35,11 @@ const index = ({ children }) => {
   // const [login, setLogin] = useState({});
   const decoded = jwtDecode(token);
   const [message, setMessage] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState);
   };
-  // const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const socket = io(API_URL);
@@ -62,46 +63,39 @@ const index = ({ children }) => {
   }, []);
 
   const createNotification = (sender, message) => {
-    return NotificationManager.info(message, `New message from: ${sender}`, 3000);
+    return NotificationManager.info(message, `New chat from: ${sender}`, 3000);
   };
 
   useEffect(() => {
     let url = 'user?';
-
     setQuerySearch('');
     if (query.get('search')) {
       setQuerySearch(query.get('search'));
       url += `&search=${query.get('search')}`;
     }
-
     setQueryLimit('');
     if (query.get('limit')) {
       setQueryLimit(query.get('limit'));
       url += `&limit=${query.get('limit')}`;
     }
-
     dispatch(getUser(navigate, url));
     // if (token) {
     //   setLogin(jwtDecode(token));
     // }
   }, [dispatch, navigate, query]);
-
   const filter = () => {
     let url = '/?';
-
     if (querySearch) {
       url += `&search=${querySearch}`;
     }
-
     if (queryLimit) {
       url += `&limit=${queryLimit}`;
     }
-
     return navigate(url);
   };
 
   const selectReceiver = (item) => {
-    // setIsLoading(true);
+    setIsLoading(true);
     setOpenMessage(true);
     setListChat([]);
     setActiveReceiver(item);
@@ -113,7 +107,7 @@ const index = ({ children }) => {
       receiver: item.user.id
     };
     socketio.emit('chat-history', data);
-    // setIsLoading(false);
+    setIsLoading(false);
   };
 
   const onSendMessage = (e) => {
@@ -140,12 +134,10 @@ const index = ({ children }) => {
     socketio.emit('send-message', data);
     setMessage('');
   };
-
   const handleSearch = (e) => {
     e.preventDefault();
     filter();
   };
-
   const handleDelete = (e, id) => {
     e.preventDefault();
     const payload = {
@@ -164,23 +156,26 @@ const index = ({ children }) => {
     }).then(async (deleted) => {
       if (deleted.isConfirmed) {
         socketio.emit('delete-message', payload);
+        setListChat([...listChat, payload]);
       }
     });
   };
-
   return (
     <div className="style__home">
       <aside>
-        <Sidebar
-          login={decoded}
-          listUsers={user}
-          selectReceiver={selectReceiver}
-          value={querySearch}
-          onChange={(e) => setQuerySearch(e.target.value)}
-          handleSearch={handleSearch}
-        />
+        {location.pathname === '/profile' ? (
+          <ProfileSidebar />
+        ) : (
+          <Sidebar
+            login={decoded}
+            listUsers={user}
+            selectReceiver={selectReceiver}
+            value={querySearch}
+            onChange={(e) => setQuerySearch(e.target.value)}
+            handleSearch={handleSearch}
+          />
+        )}
       </aside>
-
       {!openMessage ? (
         <div className="style__home--content">
           <div className="style__home--notfound">Please select a chat to start messaging</div>
@@ -192,18 +187,19 @@ const index = ({ children }) => {
 
             <Content listChat={listChat} login={decoded} handleDelete={handleDelete} />
             {children}
-
             <Footer onSendMessage={onSendMessage} message={message} setMessage={setMessage} />
           </div>
         </div>
       )}
-      <Drawer open={isOpen} onClose={toggleDrawer} direction="left" size={370}>
-        <ProfileSidebar />
+      <Drawer open={isOpen} onClose={toggleDrawer} direction="right">
+        <ContactSidebar activeReceiver={activeReceiver} isLoading={isLoading} />
       </Drawer>
+      {/* <Drawer open={isOpen} onClose={toggleDrawer} direction="right">
+        <ContactSidebar activeReceiver={activeReceiver} isLoading={isLoading} />
+      </Drawer> */}
 
       <NotificationContainer />
     </div>
   );
 };
-
 export default index;
