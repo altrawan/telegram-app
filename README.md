@@ -1,23 +1,28 @@
 <div id="top"></div>
-<p align="center">
-  <a href="https://github.com/altrawan/mama-recipe-app">
-    <img src="./screenshoots/Logo.png"  width="150px" alt="Logo">
+
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/altrawan/telegram-app">
+    <img src="https://lh3.googleusercontent.com/d/1G8wgeXBTgYo9nZQkDUDXAOJRdWX49Bkg" alt="Logo" width="150px">
   </a>
-</p>
-<h3 align="center">Telegram Chat</h3>
-<p align="center">
-  Send your Message to the World🌎.
-  <br/>
-  <a href="#table-of-contents">
-    <strong>Explore the docs »</strong>
-  </a>
-  <br /><br/>
-  <a href="https://bit.ly/telegram-chatting">View Demo</a>
-  ·
-  <a href="https://github.com/altrawan/telegram-app/issues">Report Bug</a>
-  ·
-  <a href="https://github.com/altrawan/telegram-app/issues">Request Feature</a>
-</p>
+
+  <h3 align="center">Telegram Chatting</h3>
+
+  <p align="center">
+    Send your Message to the World🌎.
+    <br />
+    <a href="#table-of-contents"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://bit.ly/telegram-app">View Demo</a>
+    ·
+    <a href="https://github.com/altrawan/telegram-app/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/altrawan/telegram-app/issues">Request Feature</a>
+  </p>
+</div>
+
 <p align="center">
   <a href="https://reactjs.org/">
     <img src="https://img.shields.io/badge/React-v18-blue?style=flat">
@@ -25,23 +30,35 @@
 </p>
 
 <!-- TABLE OF CONTENTS -->
- ## Table of Contents
-
-* [About the Project](#about-the-project)
-  * [Built With](#built-with)
-* [Getting Started](#getting-started)
-  * [Prerequisites](#prerequisites)
-  * [Installation](#installation)
-  * [Setup .env](#setup-env)
-* [Screenshots](#screenshoots)
-* [Contributing](#contributing)
-* [Related Project](#related-project)
-* [Contact](#contact)
-* [License](#license)
+## Table of Contents
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#setup-env-example">Setup .env example</a></li>
+      </ul>
+    </li>
+    <li><a href="#screenshoots">Screenshots</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#related-project">Related Project</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#license">License</a></li>
+  </ol>
+</details>
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
--
+**Telegram Chatting** is a web site-based two-way real-time chat communication application. Has features including two-way private messaging between users, searching user lists, viewing profiles between users, and updating user data.
 
 ### Built With
 This app was built with some technologies below:
@@ -49,6 +66,7 @@ This app was built with some technologies below:
 * [Javascript](https://www.javascript.com/)
 * [React](https://vuejs.org/v2)
 * [Axios](https://axios-http.com/)
+* [Socket.io](https://socket.io/)
 * [React Redux](https://react-redux.js.org/introduction/getting-started)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -66,14 +84,14 @@ Before going to the installation stage there are some software that must be inst
 
 ### Installation
 
-If you want to run this project locally, We recommend you to configure the [back-end](https://github.com/altrawan/food-recipe-api) first before configuring this repo front-end.
+If you want to run this project locally, I recommend you to configure the [back-end](https://github.com/altrawan/realtime-chat-api) first before configuring this repo front-end.
 - Clone the repo
 ```
-git clone https://github.com/altrawan/mama-recipe-app.git
+git clone https://github.com/altrawan/telegram-app.git
 ```
 - Go To Folder Repo
 ```
-cd mama-recipe-app
+cd telegram-app
 ```
 - Install Module
 ```
@@ -85,79 +103,17 @@ npm install
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-### Setup .env
+### Setup .env example
 Create .env file in your root project folder.
 ```
-REACT_APP_DEV=[BACKEND_URL_DEVELOPMENT]
-REACT_APP_PROD=[BACKEND_URL_PRODUCTION]
-REACT_APP_STAGING=[dev / prod]
+REACT_APP_NAME = [APP_NAME]
+REACT_APP_NODE_ENV = [NODE_ENV]
+REACT_APP_API_URL = [API_URL]
 ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Screenshoots
-<p align="center" display=flex>
-
-   <img src="screenshoots/Landing Page - Desktop.png" alt="Landing Page" width=50% />
-   <p align="center">Landing Page</p>
-
-<table>
- 
-  <tr>
-    <td><image src="screenshoots/Login Page - Desktop.png" alt="Login Page" width=100%></td>
-    <td><image src="screenshoots/Register Page - Desktop.png" alt="Register Page" width=100%/></td>
-  </tr>
-   <tr>
-    <td>Login Page</td>
-    <td>Register Page</td>
-  </tr>
-  
-  <tr>
-    <td><image src="screenshoots/Forgot Password Page - Desktop.png" alt="Forgot Password Page" width=100%></td>
-    <td><image src="screenshoots/Reset Password Page - Desktop.png" alt="Reset Password Page" width=100%/></td>
-  </tr>
-  <tr>
-    <td>Forgot Password Page</td>
-    <td>Reset Password Page</td>
-  </tr>
-
-  <tr>
-    <td><image src="screenshoots/Detail Recipe Page - Desktop.png" alt="Detail Recipe Page" width=100%></td>
-    <td><image src="screenshoots/List Recipe Page - Desktop.png" alt="List Recipe Page" width=100%></td>
-  </tr>
-  <tr>
-      <td>Detail Recipe Page</td>
-      <td>List Recipe Page</td>
-  </tr>
-  
-  <tr>
-    <td><image src="screenshoots/Add Recipe Page - Desktop.png" alt="Add Recipe Page" width=100%/></td>
-    <td><image src="screenshoots/Profile Page - Desktop.png" alt="Profile Page"' width=100%></td>
-  </tr>
-  <tr>
-    <td>Add Recipe Page</td>
-    <td>Profile Page</td>
-  </tr>
-  
-
-  <tr>
-    <td><image src="screenshoots/Edit Profile Page - Desktop.png" alt="Profile Page" width=100%></td> 
-    <td><image src="screenshoots/Change Password Page - Desktop.png" alt="Profile Page" width=100%></td>  
-  </tr>
-  <tr>
-    <td>Edit Profile Page</td>
-    <td>Change Password Page</td>
-  </tr>
-   
-  <tr>
-      <td><image src="screenshoots/Detail Video Page - Desktop.png" alt="Detail Video Page" width=100%/></td>
-  </tr>
-  <tr>
-      <td>Detail Video Page</td>
-  </tr>
-</table>
-      
-</p>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -174,11 +130,11 @@ Contributions are what make the open source community such an amazing place to b
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Related Project
-:rocket: [`Backend Mama Recipe`](https://github.com/altrawan/food-recipe-api)
+:rocket: [`Backend Telegram Chatting`](https://github.com/altrawan/realtime-chat-api)
 
-:rocket: [`Frontend Mama Recipe`](https://github.com/altrawan/mama-recipe-app)
+:rocket: [`Frontend Telegram Chatting`](https://github.com/altrawan/telegram-app)
 
-:rocket: [`Demo Mama Recipe`](https://bit.ly/mama-recipe-app)
+:rocket: [`Demo Telegram Chatting`](https://bit.ly/telegram-chatting)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -186,7 +142,7 @@ Contributions are what make the open source community such an amazing place to b
 
 My Email : muhammadalifputra8888@gmail.com
 
-Project Link: [https://github.com/altrawan/mama-recipe-app](https://github.com/altrawan/mama-recipe-app)
+Project Link: [https://github.com/altrawan/telegram-app](https://github.com/altrawan/telegram-app)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
