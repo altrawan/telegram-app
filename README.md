@@ -23,12 +23,6 @@
   </p>
 </div>
 
-<p align="center">
-  <a href="https://reactjs.org/">
-    <img src="https://img.shields.io/badge/React-v18-blue?style=flat">
-  </a>                                  
-</p>
-
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
 <details>
