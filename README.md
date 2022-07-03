@@ -157,8 +157,8 @@ REACT_APP_API_URL = [API_URL]
   </tr>
 
   <tr>
-    <td><image src="https://lh3.googleusercontent.com/d/1yXmPV_N7Wx5Mv1THO-NwOQf_TbOoizpa" alt="Message" width=100%></td>
-    <td><image src="https://lh3.googleusercontent.com/d/1FYTKVHIEjaglA7Kb7jKFUM0RYunYIMVy" alt="Choice Emoji" width=100%/></td>
+    <td><image src="https://lh3.googleusercontent.com/d/1pPlyOCT3HRr1BDQsbVREZcZKCU6IsBtY" alt="Message" width=100%></td>
+    <td><image src="https://lh3.googleusercontent.com/d/1X6BmEaR5ym4LgTV7jbS-CFzNoaJUQB-_" alt="Choice Emoji" width=100%/></td>
   </tr>
   <tr>
       <td>Message</td>
@@ -166,8 +166,8 @@ REACT_APP_API_URL = [API_URL]
   </tr>
   
   <tr>
-    <td><image src="https://lh3.googleusercontent.com/d/183kQ4cCv4Ju93smnC4Hj-xJLSFI6Q9fD" alt="Profile" width=100%></td>
-    <td><image src="https://lh3.googleusercontent.com/d/1mYXJYt1F5W_LxaC8NxYZSTwKh9SaUDcR" alt="Contact Info" width=100%/></td>
+    <td><image src="https://lh3.googleusercontent.com/d/1N__oOoEOspvL4wnnN7g5EuxmQbcCVTwi" alt="Profile" width=100%></td>
+    <td><image src="https://lh3.googleusercontent.com/d/1j8jIphokzu-WJSgzxtWLA1nW8Ot-SLN9" alt="Contact Info" width=100%/></td>
   </tr>
   <tr>
     <td>Profile</td>
