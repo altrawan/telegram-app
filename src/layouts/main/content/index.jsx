@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import moment from 'moment';
 import { AvatarDefault } from '../../../assets/images';
 
-const index = ({ listChat, login, handleDestroy }) => {
+const index = ({ listChat, login, handleDestroy, handleDelete }) => {
   moment.locale('id');
   const messagesEndRef = React.useRef(null);
 
@@ -35,7 +35,9 @@ const index = ({ listChat, login, handleDestroy }) => {
                     <p className="time">{moment(item.created_at).calendar()}</p>
                     <div className={`delete ${item.sender_id === login.id ? 'me' : 'others'}`}>
                       <svg
-                        onClick={(e) => handleDestroy(e, item)}
+                        onClick={(e) =>
+                          item.is_deleted ? handleDelete(e, item) : handleDestroy(e, item)
+                        }
                         width="19"
                         height="23"
                         viewBox="0 0 19 23"

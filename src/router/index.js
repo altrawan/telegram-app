@@ -12,7 +12,6 @@ import Reset from '../pages/auth/Reset';
 
 // Main
 import Home from '../pages/Home';
-import Profile from '../pages/Profile';
 import NotFound from '../pages/404';
 
 const router = () => {
@@ -27,7 +26,6 @@ const router = () => {
         </Route>
         <Route path="/" element={<PrivateRoute />}>
           <Route index element={<Home />} />
-          <Route path="profile" element={<Profile />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

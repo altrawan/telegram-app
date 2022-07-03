@@ -155,6 +155,29 @@ const index = ({ children }) => {
     });
   };
 
+  const onDeleteMessage = (e, chat) => {
+    e.preventDefault();
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#7e98df',
+      cancelButtonColor: '#c61212',
+      confirmButtonText: 'Yes, I sure'
+    }).then(async (deleted) => {
+      if (deleted.isConfirmed) {
+        const data = {
+          id: chat.id,
+          sender: chat.sender_id,
+          receiver: chat.receiver_id
+        };
+        console.log(data);
+        socketio.emit('delete-message', data);
+      }
+    });
+  };
+
   return (
     <div className="style__home">
       <aside>
@@ -178,6 +201,7 @@ const index = ({ children }) => {
               login={decoded}
               handleEdit={onEditMessage}
               handleDestroy={onDestroyMessage}
+              handleDelete={onDeleteMessage}
             />
             {children}
             <Footer onSendMessage={onSendMessage} message={message} setMessage={setMessage} />
