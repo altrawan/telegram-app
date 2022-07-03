@@ -14,6 +14,12 @@ import IconGraphic from './icon-graphic.svg';
 import IconChat from './icon-chat.svg';
 import IconDevice from './icon-device.svg';
 import IconBack from './icon-back.svg';
+import IconTrash from './icon-trash.svg';
+import IconSearch from './icon-search.svg';
+import IconMute from './icon-mute.svg';
+import IconImage from './icon-image.svg';
+import IconDocument from './icon-document.svg';
+import IconLocation from './icon-location.svg';
 
 export {
   IconSetting,
@@ -31,5 +37,11 @@ export {
   IconGraphic,
   IconChat,
   IconDevice,
-  IconBack
+  IconBack,
+  IconTrash,
+  IconSearch,
+  IconMute,
+  IconImage,
+  IconDocument,
+  IconLocation
 };

@@ -1,9 +1,10 @@
 import { GET_DETAIL_USER_PENDING, GET_DETAIL_USER_SUCCESS, GET_DETAIL_USER_FAILED } from '../types';
 
 const initialState = {
-  data: [],
   isLoading: false,
-  isError: false
+  isError: false,
+  data: [],
+  error: null
 };
 
 const detailUser = (state = initialState, action) => {
@@ -21,7 +22,8 @@ const detailUser = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        isError: true
+        isError: true,
+        error: action.payload
       };
     default:
       return state;

@@ -34,7 +34,7 @@ const PasswordInput = React.forwardRef(
             color: 'var(--text-gray)',
             opacity: '0.75'
           }}>
-          Password
+          {id === 'password' ? 'Password' : 'Confirm Password'}
         </InputLabel>
         <Input
           id={id}

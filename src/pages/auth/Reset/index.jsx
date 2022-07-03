@@ -1,30 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { login } from '../../../redux/actions/auth';
+import { reset } from '../../../redux/actions/auth';
 import { AuthLayout } from '../../../layouts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { Card, Button, Input, PasswordInput, Separator } from '../../../components';
+import { Card, Button, PasswordInput } from '../../../components';
 import { toastr } from '../../../utils/toastr';
 import { APP_NAME } from '../../../helpers/env';
-import './index.scss';
 
 const index = () => {
   const navigate = useNavigate();
+  const { token } = useParams();
   const [isShowPassword, setIsShowPassword] = useState(false);
+  const [isShowConfirm, setIsShowConfirm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [form, setForm] = useState({
-    email: '',
-    password: ''
+    password: '',
+    passwordConfirmation: ''
   });
 
   useEffect(() => {
-    document.title = `${APP_NAME} - Login Page`;
+    document.title = `${APP_NAME} - Reset Password Page`;
   }, []);
 
   const handleClickShowPassword = () => {
     setIsShowPassword(!isShowPassword);
+  };
+
+  const handleClickShowConfirm = () => {
+    setIsShowConfirm(!isShowConfirm);
   };
 
   const handleChange = (e) => {
@@ -37,16 +42,22 @@ const index = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!form.email || !form.password) {
+    if (!form.password || !form.passwordConfirmation) {
       Swal.fire({
         title: 'Error!',
         text: 'All field must be filled!',
         icon: 'error'
       });
+    } else if (form.password !== form.passwordConfirmation) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Password confirmation does not match password',
+        icon: 'error'
+      });
     } else {
       setIsLoading(true);
 
-      login(form)
+      reset(form, token)
         .then((res) => {
           Swal.fire({
             title: 'Success!',
@@ -69,8 +80,8 @@ const index = () => {
         })
         .finally(() => {
           setForm({
-            email: '',
-            password: ''
+            password: '',
+            passwordConfirmation: ''
           });
           setIsLoading(false);
         });
@@ -81,21 +92,11 @@ const index = () => {
     <AuthLayout>
       <Card>
         <section className="style__login">
-          <h3 className="style__login--title">Login</h3>
-          <p className="style__login--subtitle">Hi, Welcome back!</p>
+          <h3 className="style__login--title">Reset Password</h3>
+          <p className="style__login--subtitle">
+            You need to change your password to activate your account
+          </p>
           <form onSubmit={handleSubmit}>
-            <div>
-              <Input
-                type="email"
-                id="email"
-                name="email"
-                label="Email"
-                style={{ marginBottom: '30px' }}
-                className="style__login--textfield"
-                value={form.email}
-                onChange={handleChange}
-              />
-            </div>
             <div>
               <PasswordInput
                 id="password"
@@ -106,10 +107,15 @@ const index = () => {
                 handleMouseDownPassword={(e) => e.preventDefault()}
               />
             </div>
-            <div>
-              <Link to="/forgot" className="style__login--forgot">
-                Forgot Password?
-              </Link>
+            <div style={{ marginTop: '30px', marginBottom: '40px' }}>
+              <PasswordInput
+                id="passwordConfirmation"
+                value={form.passwordConfirmations}
+                onChange={handleChange}
+                isShowPassword={isShowConfirm}
+                handleClickShowPassword={handleClickShowConfirm}
+                handleMouseDownPassword={(e) => e.preventDefault()}
+              />
             </div>
             {isLoading ? (
               <Button isPrimary type="submit" className="style__login--button" disabled="disabled">
@@ -118,24 +124,10 @@ const index = () => {
               </Button>
             ) : (
               <Button isPrimary type="submit" className="style__login--button">
-                Login
+                Reset Password
               </Button>
             )}
           </form>
-
-          <Separator title="Login with" />
-          <Button isOutline type="button" icon="google">
-            Google
-          </Button>
-
-          <footer className="style__login--footer">
-            <p className="style__login--text">
-              Don&apos;t have and account?{' '}
-              <Link to="/register" className="style__login--anchor">
-                <span className="style__login--link">Sign Up</span>
-              </Link>
-            </p>
-          </footer>
         </section>
       </Card>
     </AuthLayout>

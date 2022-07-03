@@ -1,19 +1,15 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import { AvatarDefault } from '../../../assets/images';
-import { API_URL } from '../../../helpers/env';
 import moment from 'moment';
 import './index.scss';
 
 const MessageCard = ({ avatar, username, message, time, newMessage, onClick }) => {
-  // console.log(message);
   return (
     <div className="style__message" onClick={onClick}>
       <div className="style__message--avatar">
         <img
-          src={`${
-            avatar ? `${API_URL}uploads/users/${avatar}` : `${API_URL}uploads/users/default.png`
-          }`}
+          src={`https://drive.google.com/uc?export=view&id=${avatar}`}
           alt={username}
           onError={(e) => {
             e.target.src = AvatarDefault;

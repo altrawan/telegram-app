@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { SearchInput, MessageCard } from '../../../components';
 import { BulletList } from 'react-content-loader';
+import { useSelector, useDispatch } from 'react-redux';
+import { getListUser } from '../../../redux/actions/user';
 import {
   IconSetting,
   IconUser,
@@ -13,9 +15,49 @@ import {
 } from '../../../assets/icons';
 import './index.scss';
 
-const index = ({ login, listUsers, selectReceiver, value, onChange, handleSearch }) => {
+const index = ({ decoded, selectReceiver }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { listUser } = useSelector((state) => state);
+  // const [search, setSearch] = useState('');
+  const [queryParams] = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [limitQuery, setLimitQuery] = useState('');
   const [navbarPopup, setNavbarPopup] = useState(false);
+  // const [queryParams] = useSearchParams();
+
+  useEffect(() => {
+    let url = 'user?';
+    setSearchQuery('');
+    if (queryParams.get('search')) {
+      setSearchQuery(queryParams.get('search'));
+      url += `&search=${queryParams.get('search')}`;
+    }
+    setLimitQuery('');
+    if (queryParams.get('limit')) {
+      setLimitQuery(queryParams.get('limit'));
+      url += `&limit=${queryParams.get('limit')}`;
+    }
+
+    dispatch(getListUser(navigate, url));
+  }, [dispatch, navigate, queryParams]);
+
+  const applyFilter = () => {
+    let url = '/?';
+    if (searchQuery) {
+      url += `&search=${searchQuery}`;
+    }
+    if (limitQuery) {
+      url += `&limit=${limitQuery}`;
+    }
+    return navigate(url);
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+
+    applyFilter();
+  };
 
   const logout = () => {
     localStorage.clear();
@@ -42,10 +84,12 @@ const index = ({ login, listUsers, selectReceiver, value, onChange, handleSearch
         </svg>
         {navbarPopup && (
           <div className="nav__popup">
-            <div className="nav__popup--row" onClick={() => navigate('/profile')}>
-              <img src={IconSetting} alt="Setting" />
-              <p>Settings</p>
-            </div>
+            <Link to="?tab=settings" style={{ textDecoration: 'none' }}>
+              <div className="nav__popup--row">
+                <img src={IconSetting} alt="Setting" />
+                <p>Settings</p>
+              </div>
+            </Link>
             <div className="nav__popup--row">
               <img src={IconUser} alt="Contacts" />
               <p>Contacts</p>
@@ -79,8 +123,8 @@ const index = ({ login, listUsers, selectReceiver, value, onChange, handleSearch
             id="search"
             name="search"
             placeholder="Type your message..."
-            value={value}
-            onChange={onChange}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
         </form>
         <div className="style__sidebar--plus">
@@ -104,50 +148,29 @@ const index = ({ login, listUsers, selectReceiver, value, onChange, handleSearch
         </div>
       </div>
       <div className="style__sidebar--message">
-        {listUsers.isLoading ? (
+        {listUser.isLoading ? (
           <BulletList />
-        ) : listUsers.isError ? (
-          <div>Error</div>
-        ) : listUsers.data.length > 0 ? (
-          listUsers.data.map((item, index) =>
-            item.user.id !== login.id ? (
-              <div key={index}>
-                <MessageCard
-                  avatar={item.user.avatar}
-                  username={item.user.name}
-                  message={item.message}
-                  time={item.message}
-                  newMessage={0}
-                  onClick={() => selectReceiver(item)}
-                />
-              </div>
-            ) : (
-              <></>
-            )
+        ) : listUser.isError ? (
+          <h4>{listUser.error}</h4>
+        ) : listUser.data.length ? (
+          listUser.data.map(
+            (item, index) =>
+              item.user.id !== decoded.id && (
+                <div key={index}>
+                  <MessageCard
+                    avatar={item.user.avatar}
+                    username={item.user.name}
+                    message={item.message}
+                    time={item.message}
+                    newMessage={0}
+                    onClick={() => selectReceiver(item.user.id)}
+                  />
+                </div>
+              )
           )
         ) : (
-          <div>User Tidak Ditemukan</div>
+          <h4>User Tidak Ditemukan</h4>
         )}
-        {/* {listUsers.length ? (
-          listUsers.map((item, index) =>
-            item.user.id !== login.id ? (
-              <div key={index}>
-                <MessageCard
-                  avatar={item.user.avatar}
-                  username={item.user.name}
-                  message={item.message}
-                  time={item.message}
-                  newMessage={0}
-                  onClick={() => selectReceiver(item)}
-                />
-              </div>
-            ) : (
-              <></>
-            )
-          )
-        ) : (
-          <div>User Tidak Ditemukan</div>
-        )} */}
       </div>
     </div>
   );

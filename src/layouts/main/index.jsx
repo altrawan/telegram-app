@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import jwtDecode from 'jwt-decode';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
-import { getUser } from '../../redux/actions/user';
+import { getDetailUser, getDetailReceiver } from '../../redux/actions/user';
 import { API_URL } from '../../helpers/env';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import Drawer from 'react-modern-drawer';
@@ -20,36 +20,44 @@ import 'react-notifications/lib/notifications.css';
 import './index.scss';
 
 const index = ({ children }) => {
-  const location = useLocation();
-  const token = localStorage.getItem('token');
-  const [socketio, setSocketio] = useState(null);
-  const [listChat, setListChat] = useState([]);
-  const [activeReceiver, setActiveReceiver] = useState({});
-  const [openMessage, setOpenMessage] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.listUser);
-  const [query] = useSearchParams();
-  const [querySearch, setQuerySearch] = useState('');
-  const [queryLimit, setQueryLimit] = useState('');
-  // const [login, setLogin] = useState({});
+  const { detailUser, detailReceiver } = useSelector((state) => state);
+  const [queryParams] = useSearchParams();
+  const [tab, setTab] = useState('');
+
+  const token = localStorage.getItem('token');
   const decoded = jwtDecode(token);
+
+  const [socketio, setSocketio] = useState(null);
   const [message, setMessage] = useState('');
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [listChat, setListChat] = useState([]);
+  const [activeReceiver, setActiveReceiver] = useState('');
+  const [openMessage, setOpenMessage] = useState(false);
+
+  // Drawer
+  const [isOpen, setIsOpen] = useState(false);
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState);
   };
-  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    dispatch(getDetailUser(decoded.id, navigate));
+  }, []);
+
+  useEffect(() => {
+    setTab('');
+    if (queryParams.get('tab')) {
+      setTab(queryParams.get('tab'));
+    }
+  }, [queryParams]);
 
   useEffect(() => {
     const socket = io(API_URL);
     socket.on('send-message-response', (response) => {
-      const receiver = JSON.parse(localStorage.getItem('receiver'));
+      const receiver = localStorage.getItem('receiver');
       if (response.length) {
-        if (
-          receiver.user.id === response[0].sender_id ||
-          receiver.user.id === response[0].receiver_id
-        ) {
+        if (receiver === response[0].sender_id || receiver === response[0].receiver_id) {
           setListChat(response);
         } else {
           createNotification(
@@ -63,91 +71,72 @@ const index = ({ children }) => {
   }, []);
 
   const createNotification = (sender, message) => {
-    return NotificationManager.info(message, `New chat from: ${sender}`, 3000);
+    return NotificationManager.info(message, `New chat from: ${sender}`, 5000);
   };
 
-  useEffect(() => {
-    let url = 'user?';
-    setQuerySearch('');
-    if (query.get('search')) {
-      setQuerySearch(query.get('search'));
-      url += `&search=${query.get('search')}`;
-    }
-    setQueryLimit('');
-    if (query.get('limit')) {
-      setQueryLimit(query.get('limit'));
-      url += `&limit=${query.get('limit')}`;
-    }
-    dispatch(getUser(navigate, url));
-    // if (token) {
-    //   setLogin(jwtDecode(token));
-    // }
-  }, [dispatch, navigate, query]);
-  const filter = () => {
-    let url = '/?';
-    if (querySearch) {
-      url += `&search=${querySearch}`;
-    }
-    if (queryLimit) {
-      url += `&limit=${queryLimit}`;
-    }
-    return navigate(url);
-  };
-
-  const selectReceiver = (item) => {
-    setIsLoading(true);
+  const selectReceiver = (receiverId) => {
     setOpenMessage(true);
     setListChat([]);
-    setActiveReceiver(item);
-    localStorage.setItem('receiver', JSON.stringify(item));
-    // socketio.emit('join-room', login);
-    socketio.emit('join-room', decoded);
-    const data = {
+    dispatch(getDetailReceiver(navigate, receiverId));
+    setActiveReceiver(receiverId);
+    localStorage.setItem('receiver', receiverId);
+    socketio.emit('join-room', decoded.id);
+    socketio.emit('chat-history', {
       sender: decoded.id,
-      receiver: item.user.id
-    };
-    socketio.emit('chat-history', data);
-    setIsLoading(false);
+      receiver: receiverId
+    });
   };
 
   const onSendMessage = (e) => {
     e.preventDefault();
-    const decoded = jwtDecode(token);
-    const receiver = JSON.parse(localStorage.getItem('receiver'));
-    const payload = {
-      sender_id: decoded.id,
-      receiver_id: receiver.user.id,
-      sender: decoded.name,
-      receiver: receiver.user.name,
-      sender_avatar: decoded.avatar,
-      receiver_avatar: receiver.user.avatar,
-      type: 0,
-      message
-    };
-    setListChat([...listChat, payload]);
+
+    if (!message) {
+      Swal.fire('Oops!', 'Message empty', 'warning');
+      return;
+    }
+
     const data = {
       sender: decoded.id,
-      receiver: activeReceiver.user.id,
-      type: 0,
+      receiver: activeReceiver,
       message
     };
     socketio.emit('send-message', data);
+
+    const payload = {
+      sender_id: decoded.id,
+      receiver_id: activeReceiver,
+      message,
+      avatar: detailUser.data.avatar
+    };
+
+    setListChat([...listChat, payload]);
+
     setMessage('');
   };
-  const handleSearch = (e) => {
-    e.preventDefault();
-    filter();
-  };
-  const handleDelete = (e, id) => {
-    e.preventDefault();
-    const payload = {
-      id,
-      sender: decoded.id,
-      receiver: activeReceiver.user.id
+
+  const onEditMessage = (newMessage, message) => {
+    if (!newMessage) {
+      Swal.fire('Oops!', 'Message empty', 'warning');
+      return;
+    }
+
+    const data = {
+      sender: message.sender_id,
+      receiver: message.receiver_id,
+      message: newMessage,
+      id: message.id
     };
+
+    socketio.emit('edit-message', data);
+
+    document.getElementById('close').click();
+  };
+
+  const onDestroyMessage = (e, chat) => {
+    e.preventDefault();
     Swal.fire({
       title: 'Are you sure?',
-      text: 'Once deleted, you will not be able to recover this experience',
+      text: "You won't be able to revert this!",
       icon: 'question',
       showCancelButton: true,
       confirmButtonColor: '#7e98df',
@@ -155,25 +144,24 @@ const index = ({ children }) => {
       confirmButtonText: 'Yes, I sure'
     }).then(async (deleted) => {
       if (deleted.isConfirmed) {
-        socketio.emit('delete-message', payload);
-        setListChat([...listChat, payload]);
+        const data = {
+          id: chat.id,
+          sender: chat.sender_id,
+          receiver: chat.receiver_id
+        };
+        console.log(data);
+        socketio.emit('destroy-message', data);
       }
     });
   };
+
   return (
     <div className="style__home">
       <aside>
-        {location.pathname === '/profile' ? (
+        {tab === 'settings' ? (
           <ProfileSidebar />
         ) : (
-          <Sidebar
-            login={decoded}
-            listUsers={user}
-            selectReceiver={selectReceiver}
-            value={querySearch}
-            onChange={(e) => setQuerySearch(e.target.value)}
-            handleSearch={handleSearch}
-          />
+          <Sidebar decoded={decoded} selectReceiver={selectReceiver} />
         )}
       </aside>
       {!openMessage ? (
@@ -183,20 +171,22 @@ const index = ({ children }) => {
       ) : (
         <div className="style__home--main">
           <div className="style__home--room">
-            <Header activeReceiver={activeReceiver} onClick={toggleDrawer} />
+            <Header detailReceiver={detailReceiver} onClick={toggleDrawer} />
 
-            <Content listChat={listChat} login={decoded} handleDelete={handleDelete} />
+            <Content
+              listChat={listChat}
+              login={decoded}
+              handleEdit={onEditMessage}
+              handleDestroy={onDestroyMessage}
+            />
             {children}
             <Footer onSendMessage={onSendMessage} message={message} setMessage={setMessage} />
           </div>
         </div>
       )}
       <Drawer open={isOpen} onClose={toggleDrawer} direction="right">
-        <ContactSidebar activeReceiver={activeReceiver} isLoading={isLoading} />
+        <ContactSidebar detailReceiver={detailReceiver} />
       </Drawer>
-      {/* <Drawer open={isOpen} onClose={toggleDrawer} direction="right">
-        <ContactSidebar activeReceiver={activeReceiver} isLoading={isLoading} />
-      </Drawer> */}
 
       <NotificationContainer />
     </div>

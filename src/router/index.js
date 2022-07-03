@@ -7,6 +7,8 @@ import ScrollToTop from '../utils/scrollToTop';
 // Auth
 import Login from '../pages/auth/Login';
 import Register from '../pages/auth/Register';
+import Forgot from '../pages/auth/Forgot';
+import Reset from '../pages/auth/Reset';
 
 // Main
 import Home from '../pages/Home';
@@ -20,12 +22,14 @@ const router = () => {
         <Route path="/" element={<PublicRoute />}>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="forgot" element={<Forgot />} />
+          <Route path="reset/:token" element={<Reset />} />
         </Route>
         <Route path="/" element={<PrivateRoute />}>
           <Route index element={<Home />} />
           <Route path="profile" element={<Profile />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <ScrollToTop />
     </BrowserRouter>

@@ -1,4 +1,8 @@
-import { GET_LIST_USER_PENDING, GET_LIST_USER_SUCCESS, GET_LIST_USER_FAILED } from '../types';
+import {
+  GET_DETAIL_RECEIVER_PENDING,
+  GET_DETAIL_RECEIVER_SUCCESS,
+  GET_DETAIL_RECEIVER_FAILED
+} from '../types';
 
 const initialState = {
   isLoading: false,
@@ -7,18 +11,18 @@ const initialState = {
   error: null
 };
 
-const listUser = (state = initialState, action) => {
+const detailReceiver = (state = initialState, action) => {
   switch (action.type) {
-    case GET_LIST_USER_PENDING:
+    case GET_DETAIL_RECEIVER_PENDING:
       return { ...state, isLoading: true };
-    case GET_LIST_USER_SUCCESS:
+    case GET_DETAIL_RECEIVER_SUCCESS:
       return {
         ...state,
         isLoading: false,
         isError: false,
         data: action.payload.data
       };
-    case GET_LIST_USER_FAILED:
+    case GET_DETAIL_RECEIVER_FAILED:
       return {
         ...state,
         isLoading: false,
@@ -30,4 +34,4 @@ const listUser = (state = initialState, action) => {
   }
 };
 
-export default listUser;
+export default detailReceiver;

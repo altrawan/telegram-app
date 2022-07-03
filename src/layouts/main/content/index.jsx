@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import moment from 'moment';
 import { AvatarDefault } from '../../../assets/images';
-import { API_URL } from '../../../helpers/env';
 
-const index = ({ listChat, login, handleDelete }) => {
+const index = ({ listChat, login, handleDestroy }) => {
   moment.locale('id');
   const messagesEndRef = React.useRef(null);
 
@@ -15,6 +14,8 @@ const index = ({ listChat, login, handleDelete }) => {
     scrollToBottom();
   }, [listChat]);
 
+  console.log(listChat);
+
   return (
     <section className="style__home--chat">
       <div className="display">
@@ -23,12 +24,18 @@ const index = ({ listChat, login, handleDelete }) => {
             <div className={`chat ${item.sender_id === login.id ? 'me' : 'others'}`}>
               <div className="box">
                 <div className="wrapper">
-                  <p className="message">{item.message}</p>
+                  {item.is_deleted ? (
+                    <p className="message" style={{ color: '#bebebe', fontStyle: 'italic' }}>
+                      This message has been deleted
+                    </p>
+                  ) : (
+                    <p className="message">{item.message}</p>
+                  )}
                   <div className={`extra ${item.sender_id === login.id ? 'me' : 'others'}`}>
                     <p className="time">{moment(item.created_at).calendar()}</p>
                     <div className={`delete ${item.sender_id === login.id ? 'me' : 'others'}`}>
                       <svg
-                        onClick={(e) => handleDelete(e, item.id)}
+                        onClick={(e) => handleDestroy(e, item)}
                         width="19"
                         height="23"
                         viewBox="0 0 19 23"
@@ -46,11 +53,7 @@ const index = ({ listChat, login, handleDelete }) => {
                 </div>
                 <img
                   className="avatar"
-                  src={`${
-                    item.sender_avatar
-                      ? `${API_URL}uploads/users/${item.sender_avatar}`
-                      : `${API_URL}uploads/users/default.png`
-                  }`}
+                  src={`https://drive.google.com/uc?export=view&id=${item.avatar}`}
                   alt={item.sender}
                   onError={(e) => {
                     e.target.src = AvatarDefault;

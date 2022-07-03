@@ -6,8 +6,7 @@ import Swal from 'sweetalert2';
 import { toastr } from '../../../utils/toastr';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { getDetail, updateUser, updatePhoto } from '../../../redux/actions/user';
-import { API_URL } from '../../../helpers/env';
+import { getDetailUser, updateUser, updatePhoto } from '../../../redux/actions/user';
 import {
   IconBell,
   IconLock,
@@ -26,19 +25,31 @@ const index = () => {
   const [isLoading, setIsLoading] = useState(false);
   const token = localStorage.getItem('token');
   const [form, setForm] = useState({
-    name: data.data.name || '',
-    email: data.data.email || '',
-    username: data.data.username || '',
-    phoneNumber: data.data.phone_number || '',
-    bio: data.data.bio || ''
+    name: '',
+    email: '',
+    username: '',
+    phoneNumber: '',
+    bio: ''
   });
 
   useEffect(() => {
     if (token) {
       const decoded = jwtDecode(token);
-      dispatch(getDetail(navigate, decoded.id));
+      dispatch(getDetailUser(navigate, decoded.id));
     }
   }, []);
+
+  useEffect(() => {
+    if (data.data) {
+      setForm({
+        name: data.data.name,
+        email: data.data.email,
+        username: data.data.username,
+        phoneNumber: data.data.phone_number,
+        bio: data.data.bio
+      });
+    }
+  }, [data]);
 
   const handleAvatar = (fileImage) => {
     if (fileImage) {
@@ -55,7 +66,7 @@ const index = () => {
           });
         } else {
           const formData = new FormData();
-          formData.append('avatar', fileImage);
+          formData.append('image', fileImage);
 
           const decoded = jwtDecode(token);
           updatePhoto(formData)
@@ -66,7 +77,7 @@ const index = () => {
                 icon: 'success'
               });
 
-              dispatch(getDetail(navigate, decoded.id));
+              dispatch(getDetailUser(navigate, decoded.id));
             })
             .catch((err) => {
               Swal.fire({
@@ -119,7 +130,7 @@ const index = () => {
             icon: 'success'
           });
 
-          dispatch(getDetail(navigate, decoded.id));
+          dispatch(getDetailUser(navigate, decoded.id));
         })
         .catch((err) => {
           if (err.response.data.code === 422) {
@@ -148,7 +159,7 @@ const index = () => {
       bio: data.data.bio || ''
     });
     const decoded = jwtDecode(token);
-    dispatch(getDetail(navigate, decoded.id));
+    dispatch(getDetailUser(navigate, decoded.id));
   };
 
   return (
@@ -174,11 +185,7 @@ const index = () => {
         <section className="style__profile--section">
           <div className="style__profile--avatar">
             <img
-              src={`${
-                data.data.avatar
-                  ? `${API_URL}uploads/users/${data.data.avatar}`
-                  : `${API_URL}uploads/users/default.png`
-              }`}
+              src={`https://drive.google.com/uc?export=view&id=${data.data.avatar}`}
               alt={data.data.name}
               onError={(e) => {
                 e.target.src = AvatarDefault;
@@ -191,7 +198,7 @@ const index = () => {
         </section>
         <h5 className="style__profile--heading">Account</h5>
         <div className="style__profile--form">
-          <p className="style__profile--sub">{data.data.name}</p>
+          <p className="style__profile--sub">Name</p>
           <div>
             <input
               type="text"
@@ -205,7 +212,7 @@ const index = () => {
           <div className="divider" />
         </div>
         <div className="style__profile--form">
-          <p className="style__profile--sub">{data.data.email}</p>
+          <p className="style__profile--sub">Email</p>
           <div>
             <input
               type="text"
@@ -219,7 +226,7 @@ const index = () => {
           <div className="divider" />
         </div>
         <div className="style__profile--form">
-          <p className="style__profile--sub">{data.data.phone_number}</p>
+          <p className="style__profile--sub">Phone Number</p>
           <div>
             <input
               type="text"
@@ -233,7 +240,7 @@ const index = () => {
           <div className="divider" />
         </div>
         <div className="style__profile--form">
-          <p className="style__profile--sub">{data.data.username}</p>
+          <p className="style__profile--sub">Username</p>
           <div>
             <input
               type="text"
@@ -247,7 +254,7 @@ const index = () => {
           <div className="divider" />
         </div>
         <div className="style__profile--form">
-          <p className="style__profile--sub">{data.data.bio}</p>
+          <p className="style__profile--sub">Bio</p>
           <div>
             <textarea
               type="text"

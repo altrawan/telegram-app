@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { Card, Button, Input, PasswordInput, Separator } from '../../../components';
 import { toastr } from '../../../utils/toastr';
+import { APP_NAME } from '../../../helpers/env';
 import './index.scss';
 
 const index = () => {
@@ -20,7 +21,7 @@ const index = () => {
   });
 
   useEffect(() => {
-    document.title = 'Telegram App | Register Page';
+    document.title = `${APP_NAME} - Register Page`;
   }, []);
 
   const handleClickShowPassword = () => {

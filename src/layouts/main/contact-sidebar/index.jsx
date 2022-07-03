@@ -1,13 +1,12 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
 import { AvatarDefault } from '../../../assets/images';
-import { API_URL } from '../../../helpers/env';
 import './index.scss';
 
-const index = ({ activeReceiver, isLoading }) => {
+const index = ({ detailReceiver }) => {
   return (
     <div className="style__contact">
-      {isLoading ? (
+      {detailReceiver.isLoading ? (
         <ContentLoader />
       ) : (
         <>
@@ -25,20 +24,14 @@ const index = ({ activeReceiver, isLoading }) => {
                 fill="#7E98DF"
               />
             </svg>
-            {activeReceiver.user.username ? (
-              <h3 className="style__contact--title">{activeReceiver.user.username}</h3>
-            ) : (
-              <h3 className="style__contact--title">No Username</h3>
-            )}
+            <h3 className="style__contact--title">
+              {detailReceiver.data.username ? detailReceiver.data.username : 'No Username'}
+            </h3>
           </div>
           <div className="style__contact--avatar">
             <img
-              src={`${
-                activeReceiver.user.avatar
-                  ? `${API_URL}uploads/users/${activeReceiver.user.avatar}`
-                  : `${API_URL}uploads/users/default.png`
-              }`}
-              alt={activeReceiver.user.name}
+              src={`https://drive.google.com/uc?export=view&id=${detailReceiver.data.avatar}`}
+              alt={detailReceiver.data.name}
               onError={(e) => {
                 e.target.src = AvatarDefault;
               }}
@@ -46,7 +39,9 @@ const index = ({ activeReceiver, isLoading }) => {
           </div>
           <div className="style__contact--profile">
             <div className="desc">
-              <h4>{activeReceiver.user.name}</h4>
+              <h4 className="style__contact--title">
+                {detailReceiver.data.username ? detailReceiver.data.username : 'No Username'}
+              </h4>
               <p>Online</p>
             </div>
             <svg
@@ -72,11 +67,11 @@ const index = ({ activeReceiver, isLoading }) => {
           <div className="style__contact--profile">
             <div className="desc">
               <h5>Phone number</h5>
-              {activeReceiver.user.phone_number ? (
-                <p>{activeReceiver.user.phone_number}</p>
-              ) : (
-                <p>No Phone Number</p>
-              )}
+              <p>
+                {detailReceiver.data.phone_number
+                  ? detailReceiver.data.phone_number
+                  : 'No Phone Number'}
+              </p>
             </div>
           </div>
           <div className="style__contact--divider" />

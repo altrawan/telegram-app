@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
-import { IconPlus, IconEmoticon, IconCamera } from '../../../assets/icons';
+import {
+  IconPlus,
+  IconEmoticon,
+  IconCamera,
+  IconImage,
+  IconDocument,
+  IconUser,
+  IconLocation
+} from '../../../assets/icons';
 import Picker from 'emoji-picker-react';
 import './index.scss';
 
 const index = ({ onSendMessage, message, setMessage }) => {
+  const [navbarPopup, setNavbarPopup] = useState(false);
   const [showPicker, setShowPicker] = useState(false);
 
   const onEmojiClick = (event, emojiObject) => {
@@ -27,7 +36,13 @@ const index = ({ onSendMessage, message, setMessage }) => {
         </form>
         <div className="style__footer--action">
           <div className="icon">
-            <img src={IconPlus} alt="icon" />
+            <img
+              src={IconPlus}
+              alt="icon"
+              onClick={() => {
+                navbarPopup ? setNavbarPopup(false) : setNavbarPopup(true);
+              }}
+            />
           </div>
           <div className="icon" onClick={() => setShowPicker((val) => !val)}>
             <img src={IconEmoticon} alt="icon" />
@@ -38,6 +53,26 @@ const index = ({ onSendMessage, message, setMessage }) => {
         </div>
       </div>
       {showPicker && <Picker pickerStyle={{ width: '100%' }} onEmojiClick={onEmojiClick} />}
+      {navbarPopup && (
+        <div className="nav__popup">
+          <div className="nav__popup--row">
+            <img src={IconImage} alt="Image" />
+            <p>Image</p>
+          </div>
+          <div className="nav__popup--row">
+            <img src={IconDocument} alt="Documents" />
+            <p>Documents</p>
+          </div>
+          <div className="nav__popup--row">
+            <img src={IconUser} alt="Contacts" />
+            <p>Contacts</p>
+          </div>
+          <div className="nav__popup--row">
+            <img src={IconLocation} alt="Location" />
+            <p>Location</p>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
