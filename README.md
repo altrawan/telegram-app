@@ -24,7 +24,9 @@
 </div>
 
 <!-- TABLE OF CONTENTS -->
+
 ## Table of Contents
+
 <details>
   <summary>Table of Contents</summary>
   <ol>
@@ -51,46 +53,58 @@
 </details>
 
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
+
 **Telegram Chatting** is a web site-based two-way real-time chat communication application. Has features including two-way private messaging between users, searching user lists, viewing profiles between users, and updating user data.
 
 ### Built With
+
 This app was built with some technologies below:
-* [SCSS](https://developer.mozilla.org/en-US/docs/Web/CSS?retiredLocale=id)
-* [Javascript](https://www.javascript.com/)
-* [React](https://vuejs.org/v2)
-* [Axios](https://axios-http.com/)
-* [Socket.io](https://socket.io/)
-* [React Redux](https://react-redux.js.org/introduction/getting-started)
+
+- [SCSS](https://developer.mozilla.org/en-US/docs/Web/CSS?retiredLocale=id)
+- [Javascript](https://www.javascript.com/)
+- [React](https://vuejs.org/v2)
+- [Axios](https://axios-http.com/)
+- [Socket.io](https://socket.io/)
+- [React Redux](https://react-redux.js.org/introduction/getting-started)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
+
 ## Getting Started
 
 ### Prerequisites
 
 Before going to the installation stage there are some software that must be installed first.
 
-* [NodeJs](https://nodejs.org/en/download/)
+- [NodeJs](https://nodejs.org/en/download/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Installation
 
 If you want to run this project locally, I recommend you to configure the [back-end](https://github.com/altrawan/realtime-chat-api) first before configuring this repo front-end.
+
 - Clone the repo
+
 ```
 git clone https://github.com/altrawan/telegram-app.git
 ```
+
 - Go To Folder Repo
+
 ```
 cd telegram-app
 ```
+
 - Install Module
+
 ```
 npm install
 ```
+
 - <a href="#setup-env">Setup .env</a>
 - Type ` npm run dev` To Start Website
 - Type ` npm run start` To Start Production
@@ -98,9 +112,11 @@ npm install
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Setup .env example
+
 Create .env file in your root project folder.
+
 ```
-REACT_APP_NAME = [APP_NAME]
+REACT_APP_APP_NAME = [APP_NAME]
 REACT_APP_NODE_ENV = [NODE_ENV]
 REACT_APP_API_URL = [API_URL]
 ```
@@ -108,6 +124,7 @@ REACT_APP_API_URL = [API_URL]
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Screenshoots
+
 <p align="center" display=flex>
    
 <table>
@@ -166,6 +183,7 @@ Contributions are what make the open source community such an amazing place to b
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Related Project
+
 :rocket: [`Backend Telegram Chatting`](https://github.com/altrawan/realtime-chat-api)
 
 :rocket: [`Frontend Telegram Chatting`](https://github.com/altrawan/telegram-app)
@@ -185,6 +203,7 @@ Project Link: [https://github.com/altrawan/telegram-app](https://github.com/altr
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## License
+
 Distributed under the [MIT](/LICENSE) License.
 
 <p align="right">(<a href="#top">back to top</a>)</p>

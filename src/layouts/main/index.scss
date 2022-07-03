@@ -147,6 +147,9 @@
         }
 
         .delete {
+          display: flex;
+          flex-direction: row;
+          gap: 10px;
           &.me {
             svg {
               display: block;
@@ -204,5 +207,31 @@
         }
       }
     }
+  }
+}
+
+.custom__button {
+  margin-top: 20px;
+  border: 0;
+  border-radius: 20px;
+  height: 40px;
+  font-weight: 400;
+  font-size: 16px;
+  padding: 0 15px;
+  // margin-bottom: 20px;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+
+  &.secondary {
+    background-color: transparent;
+    color: var(--text-purple);
+    border: 1px solid var(--text-purple);
   }
 }

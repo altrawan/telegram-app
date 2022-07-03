@@ -49,6 +49,10 @@
     line-height: 21px;
     letter-spacing: -0.165px;
     color: var(--text-black);
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &--chat {
@@ -58,6 +62,10 @@
     line-height: 17px;
     letter-spacing: -0.165px;
     color: var(--text-purple);
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &--number {
