@@ -139,6 +139,15 @@ REACT_APP_API_URL = [API_URL]
   </tr>
   
   <tr>
+    <td><image src="https://lh3.googleusercontent.com/d/1j-jdWYYGbj4FMbWo9ofhCQ-8v_E3C8dY" alt="Forgot Password Page" width=100%></td>
+    <td><image src="https://lh3.googleusercontent.com/d/1ZmeU4Bdld4y_HvNzBam9HDZgsX1-iMXT" alt="Reset Password Page" width=100%/></td>
+  </tr>
+   <tr>
+    <td>Forgot Password Page</td>
+    <td>Reset Password Page</td>
+  </tr>
+  
+  <tr>
     <td><image src="https://lh3.googleusercontent.com/d/1qtmZ9ryDcI--7q_7x9MAwBzxY70IRZlM" alt="Chat List" width=100%></td>
     <td><image src="https://lh3.googleusercontent.com/d/1s8XFAxc7zMz9CyVQLFWm9IH_-hDqcaUB" alt="Menu" width=100%/></td>
   </tr>
