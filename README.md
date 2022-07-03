@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/altrawan/telegram-app">
-    <img src="https://lh3.googleusercontent.com/d/1G8wgeXBTgYo9nZQkDUDXAOJRdWX49Bkg" alt="Logo" width="150px">
+    <img src="https://lh3.googleusercontent.com/d/1VmImOVcKX-U-8k8jd3Ha70u8_hMJOEiy" alt="Logo" width="150px">
   </a>
 
   <h3 align="center">Telegram Chatting</h3>
@@ -22,12 +22,6 @@
     <a href="https://github.com/altrawan/telegram-app/issues">Request Feature</a>
   </p>
 </div>
-
-<p align="center">
-  <a href="https://reactjs.org/">
-    <img src="https://img.shields.io/badge/React-v18-blue?style=flat">
-  </a>                                  
-</p>
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
@@ -114,7 +108,49 @@ REACT_APP_API_URL = [API_URL]
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Screenshoots
+<p align="center" display=flex>
+   
+<table>
+ 
+  <tr>
+    <td><image src="https://lh3.googleusercontent.com/d/1MdEwUYFSoeCMh9iwoPRNuXU3ObA0ZIJA" alt="Login Page" width=100%></td>
+    <td><image src="https://lh3.googleusercontent.com/d/1zg2mNDwEu2onK5XfmqKA_GdKEmstUHQT" alt="Register Page" width=100%/></td>
+  </tr>
+   <tr>
+    <td>Login Page</td>
+    <td>Register Page</td>
+  </tr>
+  
+  <tr>
+    <td><image src="https://lh3.googleusercontent.com/d/1qtmZ9ryDcI--7q_7x9MAwBzxY70IRZlM" alt="Chat List" width=100%></td>
+    <td><image src="https://lh3.googleusercontent.com/d/1s8XFAxc7zMz9CyVQLFWm9IH_-hDqcaUB" alt="Menu" width=100%/></td>
+  </tr>
+  <tr>
+    <td>Chat List</td>
+    <td>Menu</td>
+  </tr>
 
+  <tr>
+    <td><image src="https://lh3.googleusercontent.com/d/1yXmPV_N7Wx5Mv1THO-NwOQf_TbOoizpa" alt="Message" width=100%></td>
+    <td><image src="https://lh3.googleusercontent.com/d/1FYTKVHIEjaglA7Kb7jKFUM0RYunYIMVy" alt="Choice Emoji" width=100%/></td>
+  </tr>
+  <tr>
+      <td>Message</td>
+      <td>Choice Emoji</td>
+  </tr>
+  
+  <tr>
+    <td><image src="https://lh3.googleusercontent.com/d/183kQ4cCv4Ju93smnC4Hj-xJLSFI6Q9fD" alt="Profile" width=100%></td>
+    <td><image src="https://lh3.googleusercontent.com/d/1mYXJYt1F5W_LxaC8NxYZSTwKh9SaUDcR" alt="Contact Info" width=100%/></td>
+  </tr>
+  <tr>
+    <td>Profile</td>
+    <td>Contact Info</td>
+  </tr>
+
+</table>
+      
+</p>
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Contributing
